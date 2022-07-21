@@ -1,13 +1,12 @@
 # dappprofile
-Stacks dapp public profile
 
-Stacks dapp public web-accessible landing page
+# Stacks dapp public web-accessible landing page
 
-Development work co-funded by the Stacks Foundation (https://grants.stacks.org/dashboard/grants/362)
+Development work by Paradigma SpA co-funded by the Stacks Foundation (https://grants.stacks.org/dashboard/grants/362)
 
-Introduction
+## Introduction
 
-As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps), Apps built with the Stacks blockchain (https://stacks.co) give users control over their digital identities, assets, and data.
+As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps), >Apps built with the Stacks blockchain (https://stacks.co) give users control over their digital identities, assets, and data.
 Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests for them without any single point of failure or trust.
 
 Stacks provides three main functions for building apps:
@@ -23,7 +22,7 @@ Figure 1 Renaissance of the App
 
 The following document is a proposal to establish a standard verifiable decentralized digital identity, starting with the dapp, and app user’s profiles that can be publicly accessed in the Internet by other users using the Stacks Dapp architecture.
 
-1.	Definition of a publicly accessible dapp’s profile and user’s profile
+## 1.	Definition of a publicly accessible dapp’s profile and user’s profile
 
 The integration of authentication, transaction signing, and data storage presents an opportunity to define the profiles for the application itself, each of its users, depending the application to identify its subjects, in a decentralized way using the Internet.  
 
@@ -36,7 +35,7 @@ The Stacks public DIDs is a profile that is registered with a username on-chain 
 
 There are several services in the Stacks ecosystem where users can claim their Blockchain Domains.  For example, a service that users can claim their Blockchain Domains, and some specific Subdomain Names is found at https://domains.paradigma.global 
 
-a.	Linking the Internet Domain Names to the Decentralized Identifiers
+### a.	Linking the Internet Domain Names to the Decentralized Identifiers
 As previously mentioned above, DIDs are URIs that associate a DID subject with a DID document allowing trustable interactions associated with that subject.
 
 One initial strategy is to link both Internet Domain Names to DIDs, matching both names. Mixing a centralized domain names with the decentralized domain names. For example, the Internet domain name XCK.app has the same name as the Stacks DID XCK.app, and both are owned by the same controller.  In this case, the controller should be the dapp developer.  
@@ -49,7 +48,7 @@ It could be useful to have a way to retrieve a verifiable DID profile for the Da
 In this case, the application should also return a JSON web token using the WebApplication Schema object (https://schema.org/WebApplication).
 Example of the WebApplication JSON web token included in the profile for XCK.app
 
-b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
+### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
 The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user support, support.xck.app
 
 In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the User Dapp as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
