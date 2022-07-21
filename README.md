@@ -16,9 +16,9 @@ Stacks provides three main functions for building apps:
 
 All three of these integrations can be used together to create powerful new user experiences that rival or exceed those of traditional apps—all while protecting your users' digital rights.
 
-Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1.  
+Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  
  
-![Figure 1 Renaissance of the App]()
+![Figure 1 Renaissance of the App](/dapp_renaissance_of_the_app.png)
 
 The following document is a proposal to establish a standard verifiable decentralized digital identity, starting with the dapp, and app user’s profiles that can be publicly accessed in the Internet by other users using the Stacks Dapp architecture.
 
@@ -46,6 +46,7 @@ The app is identified both by the Internet domain for example XCK.app and the St
 It could be useful to have a way to retrieve a verifiable DID profile for the Dapp as recommended by the W3C using an URI. For example, a web URI https://xck.app/profile
 
 In this case, the application should also return a JSON web token using the WebApplication Schema object (https://schema.org/WebApplication).
+
 Example of the WebApplication JSON web token included in the profile for XCK.app
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
@@ -54,4 +55,5 @@ The Stacks Blockchain Name System has the possibility to create subdomain names 
 In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the User Dapp as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
 
 In this case, the application should also return a JSON web token using the Person Schema object (https://schema.org/Person).
+
 Example of the Person JSON web token included in the profile for support.XCK.app
