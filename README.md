@@ -6,7 +6,7 @@ Development work by Paradigma SpA co-funded by the Stacks Foundation (https://gr
 
 ## Introduction
 
-As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps), > Apps built with the Stacks blockchain (https://stacks.co) give users control over their digital identities, assets, and data.
+As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps), Apps built with the Stacks blockchain (https://stacks.co) give users control over their digital identities, assets, and data.
 Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests for them without any single point of failure or trust.
 
 Stacks provides three main functions for building apps:
@@ -18,7 +18,7 @@ All three of these integrations can be used together to create powerful new user
 
 Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1.  
  
-Figure 1 Renaissance of the App
+![Figure 1 Renaissance of the App]()
 
 The following document is a proposal to establish a standard verifiable decentralized digital identity, starting with the dapp, and app user’s profiles that can be publicly accessed in the Internet by other users using the Stacks Dapp architecture.
 
