@@ -39,16 +39,28 @@ There are several services in the Stacks ecosystem where users can claim their B
 ### a.	Linking the Internet Domain Names to the Decentralized Identifiers
 As previously mentioned above, DIDs are URIs that associate a DID subject with a DID document allowing trustable interactions associated with that subject.
 
-One initial strategy is to link both Internet Domain Names to DIDs, matching both names. Mixing a centralized domain names with the decentralized domain names. For example, the Internet domain name XCK.app has the same name as the Stacks DID XCK.app, and both are owned by the same controller.  In this case, the controller should be the dapp developer.  
+To incentivize mass adoption of DIDs, one initial strategy is to link both Internet Domain Names to DIDs, matching both names. Mixing a centralized domain names with the decentralized domain names. For example, the Internet domain name XCK.app has the same name as the Stacks DID XCK.app, and both are owned by the same controller.  In this case, the controller should be the dapp developer.  
+
+This strategy is ratified by a recent proposal in using a new DID method in conjunction with blockchain-based DIDs that allows them to bootstrap trust using a web domain's existing reputation (https://w3c-ccg.github.io/did-method-web). 
 
 Other future strategies, could be specifying that a DID correspond to a specific Blockchain ecosystem, like Stacks.
 
-The app is identified both by the Internet domain for example XCK.app and the Stacks DID XCK.app  In case, it is a web application, it could be accessed as https://xck.app having both definitions.
+#### a.1 The App Profile
+The app is identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.  
+
+Using the did-method-web, the example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
+
 It could be useful to have a way to retrieve a verifiable DID profile for the Dapp as recommended by the W3C using an URI. For example, a web URI https://xck.app/profile
 
 In this case, the application should also return a JSON web token using the WebApplication Schema object (https://schema.org/WebApplication).
 
 Example of the WebApplication JSON web token included in the profile for XCK.app
+
+#### a.2 The App did:web DID document
+
+
+
+Example of the 
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
 The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user support, support.xck.app
