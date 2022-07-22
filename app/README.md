@@ -12,62 +12,84 @@ The first thing is to install the free Let’s Encrypt certificates with the Cer
 Los pasos son generalmente los siguientes:
 
 **1. We update the list of linux packages.**
+
 *sudo apt-get update*
 
 **2. We add the certbot repository.**
+
 *sudo add-apt-repository ppa:certbot/certbot*
 
 **3. We install the Certbot package**
+
 *sudo apt-get install certbot*
 
 **4. We create the certificate for our domain, the NGINX server must not be running at the time of creating the certificate.**
+
 *sudo certbot –nginx*
 
 We will use an example domain name anydomain.app
 
 So, the Generated certificated will be available under /etc/letsencrypt/live/anydomain.app
+
 In that directory we will have two files:
 
-/etc/letsencrypt/live/anydomain.app/fullchain.pem
+* /etc/letsencrypt/live/anydomain.app/fullchain.pem
 
-/etc/letsencrypt/live/anydomain.app/privkey.pem
+* /etc/letsencrypt/live/anydomain.app/privkey.pem
 
 **5. Luego instalaremos los dominios virtuales con NGINX**
 
 Installation Certificate for multiple domains, for example johnsmith.anydomain.app or mary_olsen.anydomain.app
 
 sudo certbot certonly \
+
 --manual \
+
 --agree-tos \
+
 --preferred-challenges=dns \
+
 --server https://acme-v02.api.letsencrypt.org/directory \
+
 --email contact.anycompany.org \
+
 --domains *.anydomain.app
 
 The Generated certificated will be available under /etc/letsencrypt/live/anydomain-0001.app
+
 /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem
+
 /etc/letsencrypt/live/anydomain.app-0001/privkey.pem
 
 **6. An important step associated with virtual domains is the following:**
+
 *(ingresar DNS usually with CPANEL)*
-For wildcard certificates, the only challenge method Let’s Encrypt accepts is the DNS challenge, which we can invoke via the preferred-challenges=dns flag.
-After executing the above command, the Certbot will share a text record to add to your DNS.
-Please deploy a DNS TXT record under the name
-_acme-challenge.erpnext.xyz with the following value for example:
-J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
-Record Name: _acme-challenge
-Record Value: J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
-Create TXT record via DNS console and setup key and value
 
 And add in the DNS (usually with CPANEL) a record for *.anydomain.app
------------------------------------------------------------------------------
 
-7. Instalar y compilar el app profile
+For wildcard certificates, the only challenge method Let’s Encrypt accepts is the DNS challenge, which we can invoke via the preferred-challenges=dns flag.
+
+After executing the above command, the Certbot will share a text record to add to your DNS.
+
+Please deploy a DNS TXT record under the name
+
+_acme-challenge.erpnext.xyz with the following value for example:
+
+J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+
+Record Name: _acme-challenge
+
+Record Value: J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+
+Create TXT record via DNS console and setup key and value
+
+**7. Instalar y compilar el app profile**
 
 To setup the development environment for this repository, follow these steps:
-1.	Clone this package.
-2.	Run npm install to install dependencies
-3.	Run npm run build to build packages
+
+*1. Clone this package.*
+*2. Run npm install to install dependencies*
+*3. Run npm run build to build packages*
 
 7. Create site in folder /var/www/profile/html
 /var/www/profile/html
