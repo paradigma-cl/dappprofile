@@ -10,6 +10,7 @@ As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps
 Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests for them without any single point of failure or trust.
 
 Stacks provides three main functions for building apps:
+
     Authentication: Register and sign users in with identities on the Stacks blockchain
     Transaction signing: Prompt users to sign and broadcast transactions to the Stacks blockchain
     Data storage: Save and retrieve data for users with Gaia
