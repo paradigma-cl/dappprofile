@@ -45,7 +45,7 @@ This strategy is ratified by a recent proposal in using a new DID method in conj
 
 Other future strategies, could be specifying that a DID correspond to a specific Blockchain ecosystem, like Stacks.
 
-#### a.1 The App Profile
+#### a.1 The App Profile document
 The app is identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.  
 
 Using the did-method-web, the example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
@@ -57,10 +57,16 @@ In this case, the application should also return a JSON web token using the WebA
 Example of the WebApplication JSON web token included in the profile for XCK.app
 
 #### a.2 The App did:web DID document
+ Creating a DID is done by:
+    applying at a domain name registrar for use of a domain name and
+    storing the location of a hosting service, the IP address at a DNS lookup service
+    creating the DID document JSON-LD file including a suitable keypair, e.g., using the Koblitz Curve, and storing the did.json file under the well-known URL to represent     the entire domain.
 
+For example, for the domain name 'xck.app', the 'did.json' will be available under the following URL: 
+'did:web:xck.app'
+ -> https://xck.app/.well-known/did.json
 
-
-Example of the 
+Example of the 'did.json' file 
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
 The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user support, support.xck.app
