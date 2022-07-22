@@ -9,7 +9,8 @@ We will need:
      * An application server, we will detail our example with NGINX
 
 The first thing is to install the free Let’s Encrypt certificates with the Certbot tool for Linux
-Los pasos son generalmente los siguientes:
+
+The steps to run the appilcation is the following:
 
 **1. We update the list of linux packages.**
 
@@ -37,7 +38,7 @@ In that directory we will have two files:
 
      * /etc/letsencrypt/live/anydomain.app/privkey.pem
 
-**5. Luego instalaremos los dominios virtuales con NGINX**
+**5. Then we will install the virtual domains with NGINX**
 
 Installation Certificate for multiple domains, for example johnsmith.anydomain.app or mary_olsen.anydomain.app
 
@@ -63,7 +64,7 @@ The Generated certificated will be available under /etc/letsencrypt/live/anydoma
 
 **6. An important step associated with virtual domains is the following:**
 
-*(ingresar DNS usually with CPANEL)*
+*(enter DNS usually with CPANEL)*
 
 And add in the DNS (usually with CPANEL) a record for *.anydomain.app
 
@@ -108,29 +109,6 @@ Create TXT record via DNS console and setup key and value
         ##
         # Profile server configuration
         ##
-
-        server {
-                listen [::]:443 ssl ipv6only=on; # managed by Certbot
-                listen 443 ssl; # managed by Certbot
-                ssl_certificate /etc/letsencrypt/live/anydomain.app/fullchain.pem; # managed by Certbot
-                ssl_certificate_key /etc/letsencrypt/live/anydomain.app/privkey.pem; # managed by Certbot
-                include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-                if ($host = www.anydomain.app) {
-                    return 301 https://anydomain.app$request_uri;
-                } # managed by Certbot
-
-                server_name anydomain.app;
-
-                root /var/www/crosscheck/html;
-
-                index index.html index.htm index.nginx-debian.html;
-
-                location / {
-                    try_files $uri $uri/ =404;
-                }
-        }
 
         server {
                 listen 443 ssl; # managed by Certbot
