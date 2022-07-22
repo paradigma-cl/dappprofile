@@ -23,7 +23,7 @@ Decentralized Apps (Dapp’s) is the New App that integrates these main function
 
 The following document is a proposal to establish a standard verifiable decentralized digital identity, starting with the dapp, and app user’s profiles that can be publicly accessed in the Internet by other users using the Stacks Dapp architecture.
 
-## 1.	Definition of a publicly accessible dapp’s profile and user’s profile
+## 1.	Definition of a publicly accessible app’s profile and app user’s profile
 
 The integration of authentication, transaction signing, and data storage presents an opportunity to define the profiles for the application itself, each of its users, depending the application to identify its subjects, in a decentralized way using the Internet.  
 
@@ -45,16 +45,18 @@ This strategy is ratified by a recent proposal in using a new DID method in conj
 
 Other future strategies, could be specifying that a DID correspond to a specific Blockchain ecosystem, like Stacks.
 
-#### a.1 The App Profile document
-The app is identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.  
+#### a.1 The App Profile
+The app is identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.
 
-Using the did-method-web, the example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
+The description for a App Profile document is done using a JSON web token based on the WebApplication Schema object (https://schema.org/WebApplication).
 
-It could be useful to have a way to retrieve a verifiable DID profile for the Dapp as recommended by the W3C using an URI. For example, a web URI https://xck.app/profile
+Additionally, this document has to include the did-method-web.  The example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
 
-In this case, the application should also return a JSON web token using the WebApplication Schema object (https://schema.org/WebApplication).
+It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app/profile
 
-Example of the WebApplication JSON web token included in the profile for XCK.app
+In this case, the application should also return a JSON web token using the protocol previously mentioned.
+
+Example of the WebApplication JSON web token included in the profile for 'XCK.app'
 
 #### a.2 The App did:web DID document
  Creating a DID is done by:
@@ -69,7 +71,11 @@ For example, for the domain name 'xck.app', the 'did.json' will be available und
 Example of the 'did.json' file 
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
-The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user support, support.xck.app
+In this context, the DIDs are URIs that associate a DID subject as a user of the application with a DID document allowing trustable interactions associated with that subject.
+
+#### b.1 The App User's Profile document
+The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
+
 
 In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the User Dapp as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
 
