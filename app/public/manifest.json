@@ -1,0 +1,15 @@
+{
+  "short_name": "Crosscheck",
+  "name": "Crosscheck by Paradigma - Making Business Deals System",
+  "icons": [
+    {
+      "src": "https://xck.app/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "https://xck.app/index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
