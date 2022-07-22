@@ -2,30 +2,30 @@
 
 We will need:
 
-* Linux Operating System (in this example we will use Ubuntu)
+     * Linux Operating System (in this example we will use Ubuntu)
 
-* An HTTPS:// certificate such as Let's Encrypt certificate (with Cerbot tool)
+     * An HTTPS:// certificate such as Let's Encrypt certificate (with Cerbot tool)
 
-* An application server, we will detail our example with NGINX
+     * An application server, we will detail our example with NGINX
 
 The first thing is to install the free Let’s Encrypt certificates with the Certbot tool for Linux
 Los pasos son generalmente los siguientes:
 
 **1. We update the list of linux packages.**
 
-*sudo apt-get update*
+     *sudo apt-get update*
 
 **2. We add the certbot repository.**
 
-*sudo add-apt-repository ppa:certbot/certbot*
+     *sudo add-apt-repository ppa:certbot/certbot*
 
 **3. We install the Certbot package**
 
-*sudo apt-get install certbot*
+     *sudo apt-get install certbot*
 
 **4. We create the certificate for our domain, the NGINX server must not be running at the time of creating the certificate.**
 
-*sudo certbot –nginx*
+     *sudo certbot –nginx*
 
 We will use an example domain name anydomain.app
 
@@ -33,33 +33,33 @@ So, the Generated certificated will be available under /etc/letsencrypt/live/any
 
 In that directory we will have two files:
 
-* /etc/letsencrypt/live/anydomain.app/fullchain.pem
+     * /etc/letsencrypt/live/anydomain.app/fullchain.pem
 
-* /etc/letsencrypt/live/anydomain.app/privkey.pem
+     * /etc/letsencrypt/live/anydomain.app/privkey.pem
 
 **5. Luego instalaremos los dominios virtuales con NGINX**
 
 Installation Certificate for multiple domains, for example johnsmith.anydomain.app or mary_olsen.anydomain.app
 
-sudo certbot certonly \
+     sudo certbot certonly \
 
---manual \
+      --manual \
 
---agree-tos \
+      --agree-tos \
 
---preferred-challenges=dns \
+      --preferred-challenges=dns \
 
---server https://acme-v02.api.letsencrypt.org/directory \
+      --server https://acme-v02.api.letsencrypt.org/directory \
 
---email contact.anycompany.org \
+      --email contact.anycompany.org \
 
---domains *.anydomain.app
+      --domains *.anydomain.app
 
 The Generated certificated will be available under /etc/letsencrypt/live/anydomain-0001.app
 
-/etc/letsencrypt/live/anydomain.app-0001/fullchain.pem
+     /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem
 
-/etc/letsencrypt/live/anydomain.app-0001/privkey.pem
+     /etc/letsencrypt/live/anydomain.app-0001/privkey.pem
 
 **6. An important step associated with virtual domains is the following:**
 
