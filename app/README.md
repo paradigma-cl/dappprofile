@@ -85,74 +85,78 @@ Create TXT record via DNS console and setup key and value
 
 **7. Instalar y compilar el app profile**
 
-To setup the development environment for this repository, follow these steps:
+   To setup the development environment for this repository, follow these steps:
 
-*1. Clone this package.*
-*2. Run npm install to install dependencies*
-*3. Run npm run build to build packages*
+      *1. Clone this package.*
 
-7. Create site in folder /var/www/profile/html
-/var/www/profile/html
+      *2. Run npm install to install dependencies*
 
-Install in this directory the contents of the build folder that was generated when compiling the application
+      *3. Run npm run build to build packages*
 
-Modify site settings
-cd /etc/nginx/sites-enabled
-sudo nano profile.conf
+**8. Create site in folder /var/www/profile/html**
 
+      /var/www/profile/html
 
-##
-# Profile server configuration
-##
+      Install in this directory the contents of the build folder that was generated when compiling the application
 
-server {
-        listen [::]:443 ssl ipv6only=on; # managed by Certbot
-        listen 443 ssl; # managed by Certbot
-        ssl_certificate /etc/letsencrypt/live/anydomain.app/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/anydomain.app/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+**9. Modify site settings**
+      
+      cd /etc/nginx/sites-enabled
+      
+      sudo nano profile.conf
 
-        if ($host = www.anydomain.app) {
-            return 301 https://anydomain.app$request_uri;
-        } # managed by Certbot
+        ##
+        # Profile server configuration
+        ##
 
-        server_name anydomain.app;
+        server {
+                listen [::]:443 ssl ipv6only=on; # managed by Certbot
+                listen 443 ssl; # managed by Certbot
+                ssl_certificate /etc/letsencrypt/live/anydomain.app/fullchain.pem; # managed by Certbot
+                ssl_certificate_key /etc/letsencrypt/live/anydomain.app/privkey.pem; # managed by Certbot
+                include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-        root /var/www/crosscheck/html;
+                if ($host = www.anydomain.app) {
+                    return 301 https://anydomain.app$request_uri;
+                } # managed by Certbot
 
-        index index.html index.htm index.nginx-debian.html;
+                server_name anydomain.app;
 
-        location / {
-            try_files $uri $uri/ =404;
+                root /var/www/crosscheck/html;
+
+                index index.html index.htm index.nginx-debian.html;
+
+                location / {
+                    try_files $uri $uri/ =404;
+                }
         }
-}
 
-server {
-        listen 443 ssl; # managed by Certbot
-        ssl_certificate /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem; # managed by Certbot
-        ssl_certificate_key /etc/letsencrypt/live/anydomain.app-0001/privkey.pem; # managed by Certbot
-        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+        server {
+                listen 443 ssl; # managed by Certbot
+                ssl_certificate /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem; # managed by Certbot
+                ssl_certificate_key /etc/letsencrypt/live/anydomain.app-0001/privkey.pem; # managed by Certbot
+                include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-        server_name *.anydomain.app;
+                server_name *.anydomain.app;
 
-        root /var/www/profile/html;
+                root /var/www/profile/html;
 
-        index index.html index.htm index.nginx-debian.html;
+                index index.html index.htm index.nginx-debian.html;
 
-        location / {
-            try_files $uri $uri/ =404;
+                location / {
+                    try_files $uri $uri/ =404;
+                }
         }
-}
 
-server {
-    if ($host = anydomain.app) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
+        server {
+            if ($host = anydomain.app) {
+                return 301 https://$host$request_uri;
+            } # managed by Certbot
 
-Start NGINX
+**10. Start NGINX**
 
-sudo systemctl start nginx
+      sudo systemctl start nginx
 
 
