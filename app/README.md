@@ -138,3 +138,7 @@ Create TXT record via DNS console and setup key and value
       sudo systemctl start nginx
 
 
+[Link Demo Profile](https://support.xck.app)
+
+[Link Demo Display JSON](https://support.xck.app?profile)
+
