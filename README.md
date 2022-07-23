@@ -111,8 +111,8 @@ This is accomplished using virtual servers.
 [Example of the configuration of the domain and subdomain routing service](app/)
 
 
-## 3.	Procedure to access the public dapp's data.
+## 3.	Procedure to access the public app's data.
 
-In the Stack App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user want to share.  This information is stored in a decentralizaed way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
+In the Stack App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user wants to share.  This information is stored in a decentralizaed way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
 
 [Example of the application that displays the app user profile in a public form](/app/src)
