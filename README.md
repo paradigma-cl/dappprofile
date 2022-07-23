@@ -77,8 +77,24 @@ In this context, the DIDs are URIs that associate a DID subject as a user of the
 The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
 
 
-In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the User Dapp as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
+In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
 
-In this case, the application should also return a JSON web token using the Person Schema object (https://schema.org/Person).
+The description for a App User Profile document is done using a JSON web token based on the Person Schema object (https://schema.org/Person).
+
+Also, this document has to include the did-method-web for the app user.  The example is represented as 'did:web:support.xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app user profile.
+
+In this case, the application should also return a JSON web token using the Person Schema object.
 
 [Example of the Person JSON web token included in the profile for support.XCK.app](/userprofile/profile.json)
+
+#### b.2 The App User did:web DID document
+ Creating a DID is done by:
+    applying at an domain name registrar for use of a domain name and
+    storing the location of a hosting service, the IP address at a DNS lookup service
+    creating the DID document JSON-LD file including a suitable keypair, e.g., using the Koblitz Curve, and storing the did.json file under the well-known URL to represent     the entire domain.
+
+For example, for the domain name 'support.xck.app', the 'did.json' will be available under the following URL: 
+'did:web:support.xck.app'
+ -> https://support.xck.app/.well-known/did.json
+
+[Example of the 'did.json' file for 'support.XCK.app'](/appprofile/did.json)
