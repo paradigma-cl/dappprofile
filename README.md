@@ -98,3 +98,17 @@ For example, for the domain name 'support.xck.app', the 'did.json' will be avail
  -> https://support.xck.app/.well-known/did.json
 
 [Example of the 'did.json' file for 'support.XCK.app'](/appprofile/did.json)
+
+2.	How to set up the domain and subdomain name routing service 
+
+The application has a domain name that targets the services that the users requires.  This functionality probably will be different from a subdomain name that represents the application user.  For this, the proposal considers creating a routing service dependinf of the url that is requested. 
+
+If the request is the application domain name, for example 'XCK.app', it routes to the actual application location.
+If the request is for a subdomain name, for example 'support.XCK.app', it routes to the web app user profile page.
+
+This is accomplished using virtual servers.
+
+[Example of the configuration of the domain and subdomain routing service](app/)
+
+
+3.	Procedure to access the public dapp's data.
