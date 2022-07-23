@@ -19,7 +19,7 @@ All three of these integrations can be used together to create powerful new user
 
 Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  
  
-![Figure 1 Renaissance of the App](/dapp_renaissance_of_the_app.png)
+[Figure 1 Renaissance of the App](/dapp_renaissance_of_the_app.png)
 
 The following document is a proposal to establish a standard verifiable decentralized digital identity, starting with the dapp, and app user’s profiles that can be publicly accessed in the Internet by other users using the Stacks Dapp architecture.
 
