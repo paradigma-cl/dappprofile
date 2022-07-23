@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 
 // Components
 import Profile from './components/profile/profile.js';
+import DisplayJson from './components/displayjson/displayjson.js';
 
 // Translate
 import { IntlProvider } from "react-intl";
@@ -53,11 +54,21 @@ class App extends PureComponent {
 
     const userProfileX = window.location.origin;
     const ArrayIdValue = userProfileX.split('https://')
-    const userProfile = ArrayIdValue[1]
+    let userProfile = ArrayIdValue[1]
+
+    let bDisplayProfile = false
+    if (window.location.search === '?profile'){
+       bDisplayProfile = true
+    }
+
     return (
-          <IntlProvider locale={language3} messages={this.state.messages[language3]}>
-                <Profile userProfile={userProfile} language={language3} />
-          </IntlProvider>
+      <IntlProvider locale={language3} messages={this.state.messages[language3]}>
+           {bDisplayProfile ?
+               <DisplayJson userProfile={userProfile} language={language3} />
+           :
+               <Profile userProfile={userProfile} language={language3} />
+           }
+      </IntlProvider>
     );
   }
 }
