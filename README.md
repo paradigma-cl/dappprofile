@@ -99,7 +99,7 @@ For example, for the domain name 'support.xck.app', the 'did.json' will be avail
 
 [Example of the 'did.json' file for 'support.XCK.app'](/appprofile/did.json)
 
-2.	How to set up the domain and subdomain name routing service 
+## 2.	How to set up the domain and subdomain name routing service 
 
 The application has a domain name that targets the services that the users requires.  This functionality probably will be different from a subdomain name that represents the application user.  For this, the proposal considers creating a routing service dependinf of the url that is requested. 
 
@@ -111,4 +111,8 @@ This is accomplished using virtual servers.
 [Example of the configuration of the domain and subdomain routing service](app/)
 
 
-3.	Procedure to access the public dapp's data.
+## 3.	Procedure to access the public dapp's data.
+
+In the Stack App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user want to share.  This information is stored in a decentralizaed way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
+
+[Example of the application that displays the app user profile in a public form](/app/src)
