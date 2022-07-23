@@ -17,6 +17,9 @@ import Loader from '../loader'
 //import jwt from 'jsonwebtoken';
 import jwt_decode from "jwt-decode";
 
+//JSON Formatter
+import JsonFormatter from 'react-json-formatter'
+
 class DisplayJson extends React.Component {
   constructor() {
     super();
@@ -89,6 +92,13 @@ class DisplayJson extends React.Component {
     if (this.state.jsonBlockstack5 !== null){
       jsonBlockstack5X = true
     }
+
+    const jsonStyle = {
+        propertyStyle: { color: 'red' },
+        stringStyle: { color: 'green' },
+        numberStyle: { color: 'darkorange' }
+      }
+
     return (
       <Container fluid className="main-content-container px-4" >
         {jsonBlockstack5X ?
@@ -102,7 +112,9 @@ class DisplayJson extends React.Component {
                   <Row>
                     <Col lg="1"></Col>
                     <Col lg="10">
-                       <div>{this.state.jsonBlockstack5}</div>
+                       <div>
+                         <JsonFormatter json={this.state.jsonBlockstack5} tabWith={4} jsonStyle={jsonStyle} />
+                       </div>
                     </Col>
                    <Col lg="1"></Col>
                   </Row>
