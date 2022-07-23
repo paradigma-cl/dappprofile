@@ -52,7 +52,7 @@ The description for a App Profile document is done using a JSON web token based 
 
 Additionally, this document has to include the did-method-web.  The example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
 
-It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app/profile
+It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app?profile
 
 In this case, the application should also return a JSON web token using the protocol previously mentioned.
 
@@ -77,7 +77,7 @@ In this context, the DIDs are URIs that associate a DID subject as a user of the
 The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
 
 
-In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app/profile
+In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app?profile
 
 The description for a App User Profile document is done using a JSON web token based on the Person Schema object (https://schema.org/Person).
 
@@ -85,7 +85,7 @@ Also, this document has to include the did-method-web for the app user.  The exa
 
 In this case, the application should also return a JSON web token using the Person Schema object.
 
-[Example of the Person JSON web token included in the profile for support.XCK.app](/userprofile/profile.json)
+[Example of the Person JSON web token included in the profile for support.XCK.app](/userprofile?profile.json)
 
 #### b.2 The App User did:web DID document
  Creating a DID is done by:
