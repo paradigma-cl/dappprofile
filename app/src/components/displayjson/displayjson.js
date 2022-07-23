@@ -63,7 +63,7 @@ class DisplayJson extends React.Component {
                   if(fileContents) {
                       const jwtToken = fileContents.data
                       const jwtDecoded = jwt_decode(jwtToken);
-                      let jsonBlockstack5 = jwtDecoded[0].payload.claim
+                      let jsonBlockstack5 = jwtDecoded[0]
                       this.setState({jsonBlockstack5: JSON.stringify(jsonBlockstack5)})
                       resolve1()
                     } else {
