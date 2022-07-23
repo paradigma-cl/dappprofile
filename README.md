@@ -115,4 +115,4 @@ This is accomplished using virtual servers.
 
 In the Stack App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user wants to share.  This information is stored in a decentralizaed way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
 
-[Example of the application that displays the app user profile in a public form](/app/src)
+[Example of the application that displays the app user profile in a public form](/app)
