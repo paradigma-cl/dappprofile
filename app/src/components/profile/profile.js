@@ -154,6 +154,8 @@ class Profile extends React.Component {
                       const jwtToken = fileContents.data
                       const jwtPayload = jwtToken.split('.');
                       const jwtDecoded = jwt_decode(jwtToken);
+                      console.log(jwtPayload)
+                      console.log(jwtDecoded)
                       let jsonBlockstack4 = jwtDecoded[0].payload.claim
                       if (jsonBlockstack4.account[0].scope === undefined || jsonBlockstack4.account[0].scope === null || jsonBlockstack4.account[0].scope === 'undefined'){ jsonBlockstack4.account[0].scope = 'Private'}
                       if (jsonBlockstack4.account[1].scope === undefined || jsonBlockstack4.account[1].scope === null || jsonBlockstack4.account[1].scope === 'undefined'){ jsonBlockstack4.account[1].scope = 'Private'}
@@ -242,20 +244,16 @@ class Profile extends React.Component {
                          jsonBlockstack3 = jsonBlockstack1.substring(1,jsonBlockstack1.length - 1);
                       }
                       const jsonBlockstack4 = JSON.parse(jsonBlockstack3)
-                      const largo = jsonBlockstack4.length
-                      jsonBlockstack4.map((todo,i)=>{
-                        if(todo.code==='ColorTheme'){
+                      for(let i = 0 ; i < jsonBlockstack4.length; i++){
+                        if(jsonBlockstack4[i].code==='ColorTheme'){
                           let e=''
-                          if (todo.description === 'Dark') {
+                          if (jsonBlockstack4[i].description === 'Dark') {
                              this.handleChangeMode(e,false).then(resolve1())
                           }else{
                              this.handleChangeMode(e,true).then(resolve1())
                           }
                         }
-                        if (i === (largo - 1)){
-                          resolve1()
-                        }
-                      })
+                      }
                       resolve1()
                     } else {
                       reject1()
@@ -425,12 +423,15 @@ class Profile extends React.Component {
                                   }
                                   {this.state.bSmsScope ?
                                      <>
-                                       <tr><td style={{fontSize:12, color: this.state.colorLabelPhone}}>Phone</td></tr>
+                                       <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>Phone</td></tr>
                                        <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[1].smsPrefix}${this.state.jsonBlockstack4.account[1].identifier}`}</strong></td></tr>
                                      </>
                                   :
                                      null
                                   }
+                                  <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>did:web</td></tr>
+                                  <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[10].identifier}`}</strong></td></tr>
+
                                </tbody>
                             </Table>
                           </Row>
@@ -527,6 +528,23 @@ class Profile extends React.Component {
                       </Row>
                       <Row>&nbsp;</Row>
                       <Row>&nbsp;</Row>
+                    </>
+                  }
+                </Card>
+              </Col>
+              <Col lg="2"></Col>
+            </Row>
+          </>
+        :
+          <Loader />
+        }
+      </Container>
+    )
+  }
+};
+
+export default Profile;
+>
                     </>
                   }
                 </Card>
