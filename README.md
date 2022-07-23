@@ -56,7 +56,7 @@ It could be useful to have a way to retrieve a verifiable DID profile for the As
 
 In this case, the application should also return a JSON web token using the protocol previously mentioned.
 
-Example of the WebApplication JSON web token included in the profile for 'XCK.app'
+[Example of the WebApplication JSON web token included in the profile for 'XCK.app'](!/userprofile/profile.json)
 
 #### a.2 The App did:web DID document
  Creating a DID is done by:
