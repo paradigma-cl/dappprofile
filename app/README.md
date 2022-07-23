@@ -2,11 +2,11 @@
 
 We will need:
 
-     * Linux Operating System (in this example we will use Ubuntu)
+     1. Linux Operating System (in this example we will use Ubuntu)
 
-     * An HTTPS:// certificate such as Let's Encrypt certificate (with Cerbot tool)
+     2. An HTTPS:// certificate such as Let's Encrypt certificate (with Cerbot tool)
 
-     * An application server, we will detail our example with NGINX
+     3. An application server, we will detail our example with NGINX
 
 The first thing is to install the free Let’s Encrypt certificates with the Certbot tool for Linux
 
@@ -14,19 +14,19 @@ The steps to run the appilcation is the following:
 
 **1. We update the list of linux packages.**
 
-     *sudo apt-get update*
+     sudo apt-get update
 
 **2. We add the certbot repository.**
 
-     *sudo add-apt-repository ppa:certbot/certbot*
+     sudo add-apt-repository ppa:certbot/certbot
 
 **3. We install the Certbot package**
 
-     *sudo apt-get install certbot*
+     sudo apt-get install certbot
 
 **4. We create the certificate for our domain, the NGINX server must not be running at the time of creating the certificate.**
 
-     *sudo certbot –nginx*
+     sudo certbot –nginx
 
 We will use an example domain name anydomain.app
 
@@ -34,9 +34,9 @@ So, the Generated certificated will be available under /etc/letsencrypt/live/any
 
 In that directory we will have two files:
 
-     * /etc/letsencrypt/live/anydomain.app/fullchain.pem
+      /etc/letsencrypt/live/anydomain.app/fullchain.pem
 
-     * /etc/letsencrypt/live/anydomain.app/privkey.pem
+      /etc/letsencrypt/live/anydomain.app/privkey.pem
 
 **5. Then we will install the virtual domains with NGINX**
 
@@ -88,11 +88,11 @@ Create TXT record via DNS console and setup key and value
 
    To setup the development environment for this repository, follow these steps:
 
-      *1. Clone this package.*
+      1. Clone this package.
 
-      *2. Run npm install to install dependencies*
+      2. Run npm install to install dependencies
 
-      *3. Run npm run build to build packages*
+      3. Run npm run build to build packages
 
 **8. Create site in folder /var/www/profile/html**
 
