@@ -84,23 +84,7 @@ Record Value: J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
 
 Create TXT record via DNS console and setup key and value
 
-**7. Instalar y compilar el app profile**
-
-   To setup the development environment for this repository, follow these steps:
-
-      1. Clone this package.
-
-      2. Run npm install to install dependencies
-
-      3. Run npm run build to build packages
-
-**8. Create site in folder /var/www/profile/html**
-
-      /var/www/profile/html
-
-      Install in this directory the contents of the build folder that was generated when compiling the application
-
-**9. Modify site settings**
+**7. Modify site settings**
       
       cd /etc/nginx/sites-enabled
       
@@ -132,6 +116,22 @@ Create TXT record via DNS console and setup key and value
             if ($host = anydomain.app) {
                 return 301 https://$host$request_uri;
             } # managed by Certbot
+
+**8. Instalar y compilar el app profile**
+
+   To setup the development environment for this repository, follow these steps:
+
+      1. Clone this package.
+
+      2. Run npm install to install dependencies
+
+      3. Run npm run build to build packages
+
+**9. Create site in folder /var/www/profile/html**
+
+      /var/www/profile/html
+
+      Install in this directory the contents of the build folder that was generated when compiling the application
 
 **10. Start NGINX**
 
