@@ -544,20 +544,3 @@ class Profile extends React.Component {
 };
 
 export default Profile;
->
-                    </>
-                  }
-                </Card>
-              </Col>
-              <Col lg="2"></Col>
-            </Row>
-          </>
-        :
-          <Loader />
-        }
-      </Container>
-    )
-  }
-};
-
-export default Profile;
