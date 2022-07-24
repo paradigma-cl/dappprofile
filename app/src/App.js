@@ -20,7 +20,7 @@ import messages_de from "./languages/i18n/de.json";
 import messages_it from "./languages/i18n/it.json";
 
 import 'bootstrap/dist/css/bootstrap.css';
-import './styles/shards-dashboards.1.1.0Blue.min.css';
+import './styles/shards-dashboards.min.css';
 
 //----------------------------
 class App extends PureComponent {
