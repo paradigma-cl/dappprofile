@@ -1,0 +1,15 @@
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:web:support.xck.app",
+    "verificationMethod": [
+    {
+    "id": "did:web:support.xck.app#controller",
+    "type": "Secp256k1",
+    "controller": "did:web:support.xck.app",
+    "stacksAddress": "SP3VBHA63ZTZFWTBJWHV775WR3PBZ64B26AYX2CF"
+}
+],
+    "authentication": [
+    "did:web:support.xck.app#controller"
+]
+}
