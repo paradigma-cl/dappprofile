@@ -85,7 +85,7 @@ Also, this document has to include the did-method-web for the app user.  The exa
 
 In this case, the application should also return a JSON web token using the Person Schema object.
 
-[Example of the Person JSON web token included in the profile for support.XCK.app](/userprofile?profile.json)
+[Example of the Person JSON web token included in the profile for support.XCK.app](/userprofile/profile.json)
 
 #### b.2 The App User did:web DID document
  Creating a DID is done by:
