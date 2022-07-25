@@ -56,7 +56,7 @@ It could be useful to have a way to retrieve a verifiable DID profile for the As
 
 In this case, the application should also return a JSON web token using the protocol previously mentioned.
 
-[Example of the WebApplication JSON web token included in the profile for 'XCK.app'](/appprofile/profile.json)
+[Example of the WebApplication JSON web token included in the profile for 'XCK.app'](/appprofile?profile.json)
 
 #### a.2 The App did:web DID document
  Creating a DID is done by:
@@ -66,9 +66,9 @@ In this case, the application should also return a JSON web token using the prot
 
 For example, for the domain name 'xck.app', the 'did.json' will be available under the following URL: 
 'did:web:xck.app'
- -> https://xck.app/.well-known/did.json
+ -> https://xck.app?did.json
 
-[Example of the 'did.json' file for 'XCK.app'](/appprofile/did.json)
+[Example of the 'did.json' file for 'XCK.app'](/appprofile?did.json)
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
 In this context, the DIDs are URIs that associate a DID subject as a user of the application with a DID document allowing trustable interactions associated with that subject.
@@ -95,7 +95,7 @@ In this case, the application should also return a JSON web token using the Pers
 
 For example, for the domain name 'support.xck.app', the 'did.json' will be available under the following URL: 
 'did:web:support.xck.app'
- -> https://support.xck.app/.well-known/did.json
+ -> https://support.xck.app?did.json
 
 [Example of the 'did.json' file for 'support.XCK.app'](/appprofile/did.json)
 
