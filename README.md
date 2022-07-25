@@ -97,7 +97,7 @@ For example, for the domain name 'support.xck.app', the 'did.json' will be avail
 'did:web:support.xck.app'
  -> https://support.xck.app?did.json
 
-[Example of the 'did.json' file for 'support.XCK.app'](/appprofile/did.json)
+[Example of the 'did.json' file for 'support.XCK.app'](/userprofile/did.json)
 
 ## 2.	How to set up the domain and subdomain name routing service 
 
