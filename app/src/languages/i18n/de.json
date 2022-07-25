@@ -1,4 +1,6 @@
 {
     "profile.claim": "Haben Sie Ihr Unternehmensprofil CrossCheck? Fang hier an! ",
-    "profile.claim2": "Möchten Sie ein dezentrales Domänenprofil erhalten? Erstellen Sie es hier!"
+    "profile.claim2": "Möchten Sie ein dezentrales Domänenprofil erhalten? Erstellen Sie es hier!",
+    "profile.domainnotfound": "Domänenname nicht gefunden, versuchen Sie es erneut!!",
+    "profile.profilenotfound": "Der Benutzer muss seine Daten mit dem Profileditor aktualisieren."
 }

@@ -1,4 +1,6 @@
 {
     "profile.claim": "Hai il tuo profilo aziendale CrossCheck? Comincia qui! ",
-    "profile.claim2": "Vuoi ottenere un profilo di dominio decentralizzato? Crealo qui!"
+    "profile.claim2": "Vuoi ottenere un profilo di dominio decentralizzato? Crealo qui!",
+    "profile.domainnotfound": "Nome di dominio non trovato, riprova!!",
+    "profile.profilenotfound": "L'utente deve aggiornare i propri dati con l'editor del profilo."
 }

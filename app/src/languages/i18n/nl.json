@@ -1,4 +1,6 @@
 {
     "profile.claim": "Heeft u uw bedrijfsprofiel CrossCheck? Begin hier!  ",
-    "profile.claim2": "Wilt u een decentraal domeinprofiel krijgen? Creëer het hier!"
+    "profile.claim2": "Wilt u een decentraal domeinprofiel krijgen? Creëer het hier!",
+    "profile.domainnotfound": "Domeinnaam niet gevonden, probeer het opnieuw!!",
+    "profile.profilenotfound": "De gebruiker moet zijn gegevens bijwerken met de profieleditor."
 }

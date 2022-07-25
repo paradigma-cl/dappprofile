@@ -1,4 +1,6 @@
 {
     "profile.claim": "Do you have your decentralized presentation profile? Start here!",
-    "profile.claim2": "Do you want to get a decentralized domain profile? Create it here!"
+    "profile.claim2": "Do you want to get a decentralized domain profile? Create it here!",
+    "profile.domainnotfound": "Domain name not found, try again!!",
+    "profile.profilenotfound": "User must update their data with the profile editor."
 }
