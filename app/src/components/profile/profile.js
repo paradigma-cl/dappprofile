@@ -29,6 +29,7 @@ import Loader from '../loader'
 //JWT
 //import jwt from 'jsonwebtoken';
 import jwt_decode from "jwt-decode";
+import * as jose from 'jose'
 
 
 class Profile extends React.Component {
@@ -63,6 +64,7 @@ class Profile extends React.Component {
       colorPowered: "#595959",
       color404: "#cccccc",
       domainExists: true,
+      perfilExists: true,
       bDomainLength: false,
       domainLength: 0,
       bFacebook: true,
@@ -149,13 +151,16 @@ class Profile extends React.Component {
                 //const getFile = storage + `myUserConfig.json`
                 axios.get(getFile)
                   .then((fileContents) => {
-                  if(fileContents) {
-
+                    if(fileContents) {
                       const jwtToken = fileContents.data
                       const jwtPayload = jwtToken.split('.');
+                      const jwtSignature = jwtPayload[2]
+                      const jwtSignatureDecoded = Base64.decode(jwtSignature)
+
+                      this.jwtJoseVerify(jwtToken,jwtSignatureDecoded)
+
                       const jwtDecoded = jwt_decode(jwtToken);
-                      console.log(jwtPayload)
-                      console.log(jwtDecoded)
+
                       let jsonBlockstack4 = jwtDecoded[0].payload.claim
                       if (jsonBlockstack4.account[0].scope === undefined || jsonBlockstack4.account[0].scope === null || jsonBlockstack4.account[0].scope === 'undefined'){ jsonBlockstack4.account[0].scope = 'Private'}
                       if (jsonBlockstack4.account[1].scope === undefined || jsonBlockstack4.account[1].scope === null || jsonBlockstack4.account[1].scope === 'undefined'){ jsonBlockstack4.account[1].scope = 'Private'}
@@ -182,32 +187,38 @@ class Profile extends React.Component {
                       if (jsonBlockstack4.account[8].proofUrl === undefined || jsonBlockstack4.account[8].proofUrl === null || jsonBlockstack4.account[8].proofUrl === 'undefined' || jsonBlockstack4.account[8].proofUrl === ''){this.setState({bLinkedin: false})}
                       if (jsonBlockstack4.account[9].proofUrl === undefined || jsonBlockstack4.account[9].proofUrl === null || jsonBlockstack4.account[9].proofUrl === 'undefined' || jsonBlockstack4.account[9].proofUrl === ''){this.setState({bPinterest: false})}
 
-                      this.setState({jsonBlockstack4, domainExists: true, domainLength: this.props.userProfile.length, bDomainLength: true})
+                      this.setState({jsonBlockstack4, domainExists: true, perfilExists: true, domainLength: this.props.userProfile.length, bDomainLength: true})
 
                       resolve1()
                     } else {
-                      this.setState({domainExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
+                      this.setState({domainExists: true, perfilExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
                       reject1()
                     }
                   })
                   .catch(error => {
                      console.log(error)
-                     this.setState({domainExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
+                     this.setState({domainExists: true, perfilExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
                      reject1()
                   });
              })
            .catch(error => {
              console.log(error)
-             this.setState({domainExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
+             this.setState({domainExists: false, perfilExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
              reject1()
            });
         })
         .catch(error => {
            console.log(error)
-           this.setState({domainExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
+           this.setState({domainExists: false, perfilExists: false, domainLength: this.props.userProfile.length, bDomainLength: true})
            reject1()
         });
     });
+  }
+
+  jwtJoseVerify = async (jwtToken,jwtSignatureDecoded) => {
+    const { payload, protectedHeader } = await jose.jwtVerify(jwtToken, jwtSignatureDecoded)
+    console.log(protectedHeader)
+    console.log(payload)
   }
 
   readConfiguration = (userX) => {
@@ -292,188 +303,243 @@ class Profile extends React.Component {
                 <Card small className="mb-4 pt-3" style={{ backgroundColor: this.state.colorCard }}>
                   { this.state.domainExists ?
                     <>
-                      <CardHeader className="border-bottom text-center" style={{ backgroundColor: this.state.colorCard }}>
-                        <Table size="sm" className="text-center" responsive borderless>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <div className="mb-3 mx-auto">
-                                      <ReactImageFallback
-                                           src={this.state.avatar}
-                                           fallbackImage={avatar2}
-                                           initialImage={avatar2}
-                                           alt={" "}
-                                           className="rounded-circle"
-                                           width="120"
-                                      />
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr><td style={{fontSize:40, color: this.state.colorProfileName}}><strong>{this.state.jsonBlockstack4.name}</strong></td></tr>
-                              <tr><td style={{fontSize:18, color: this.state.colorUserProfile}}><span className="text-muted d-block mb-2">{this.props.userProfile}</span></td></tr>
-                           </tbody>
-                        </Table>
-                      </CardHeader>
-                      <ListGroup flush>
-                        <ListGroupItem className="p-4 text-center" style={{ backgroundColor: this.state.colorCard }}>
-                          <Row>
-                            <Col lg="1"></Col>
-                            <Col lg="10">
-                              <Table size="sm" className="text-center" responsive borderless>
-                                  <tbody>
-                                    <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>Short Description</td></tr>
-                                    <tr>
-                                      <td style={{ width: "90%" }}>
-                                          <FormTextarea
-                                            id="feMessage"
-                                            rows="3"
-                                            innerRef={this.state.jsonBlockstack4.description}
-                                            style={{backgroundColor:this.state.colorDescription, color:this.state.colorWordDescription, fontSize:18}}
-                                            placeholder={this.state.jsonBlockstack4.description}
-                                            disabled={true}
-                                          />
-                                      </td>
-                                    </tr>
-                                 </tbody>
-                              </Table>
-                            </Col>
-                            <Col lg="1"></Col>
-                          </Row>
-                          {this.state.bWebSite ?
+                    {this.state.perfilExists ?
+                      <>
+                        <CardHeader className="border-bottom text-center" style={{ backgroundColor: this.state.colorCard }}>
+                          <Table size="sm" className="text-center" responsive borderless>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div className="mb-3 mx-auto">
+                                        <ReactImageFallback
+                                             src={this.state.avatar}
+                                             fallbackImage={avatar2}
+                                             initialImage={avatar2}
+                                             alt={" "}
+                                             className="rounded-circle"
+                                             width="120"
+                                        />
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr><td style={{fontSize:40, color: this.state.colorProfileName}}><strong>{this.state.jsonBlockstack4.name}</strong></td></tr>
+                                <tr><td style={{fontSize:18, color: this.state.colorUserProfile}}><span className="text-muted d-block mb-2">{this.props.userProfile}</span></td></tr>
+                             </tbody>
+                          </Table>
+                        </CardHeader>
+                        <ListGroup flush>
+                          <ListGroupItem className="p-4 text-center" style={{ backgroundColor: this.state.colorCard }}>
+                            <Row>
+                              <Col lg="1"></Col>
+                              <Col lg="10">
+                                <Table size="sm" className="text-center" responsive borderless>
+                                    <tbody>
+                                      <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>Short Description</td></tr>
+                                      <tr>
+                                        <td style={{ width: "90%" }}>
+                                            <FormTextarea
+                                              id="feMessage"
+                                              rows="3"
+                                              innerRef={this.state.jsonBlockstack4.description}
+                                              style={{backgroundColor:this.state.colorDescription, color:this.state.colorWordDescription, fontSize:18}}
+                                              placeholder={this.state.jsonBlockstack4.description}
+                                              disabled={true}
+                                            />
+                                        </td>
+                                      </tr>
+                                   </tbody>
+                                </Table>
+                              </Col>
+                              <Col lg="1"></Col>
+                            </Row>
+                            {this.state.bWebSite ?
+                              <Row>
+                                <Col lg="2"></Col>
+                                <Col lg="8">
+                                  <Table size="sm" className="text-center" responsive borderless>
+                                      <tbody>
+                                        <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>URL Website</td></tr>
+                                        <tr><td style={{fontSize:24, color: this.state.colorEmail}}><a href={this.state.jsonBlockstack4.web} target="_blank" rel="noopener noreferrer">{this.state.jsonBlockstack4.web}</a></td></tr>
+                                      </tbody>
+                                  </Table>
+                                </Col>
+                                <Col lg="2"></Col>
+                              </Row>
+                            :
+                              null
+                            }
                             <Row>
                               <Col lg="2"></Col>
                               <Col lg="8">
                                 <Table size="sm" className="text-center" responsive borderless>
                                     <tbody>
-                                      <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>URL Website</td></tr>
-                                      <tr><td style={{fontSize:24, color: this.state.colorEmail}}><a href={this.state.jsonBlockstack4.web} target="_blank" rel="noopener noreferrer">{this.state.jsonBlockstack4.web}</a></td></tr>
+                                      <tr><td className="text-center" style={{fontSize:12, color: this.state.colorLabelEmail}}>Social Networks</td></tr>
+                                    </tbody>
+                                </Table>
+                                <Table size="sm" className="text-center" responsive borderless>
+                                    <tbody>
+                                      <tr>
+                                        { this.state.bFacebook ?
+                                           <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[4].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_facebook.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                        { this.state.bTwitter ?
+                                           <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[5].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_twitter.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                        { this.state.bYoutube ?
+                                           <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[6].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_youtube.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                        { this.state.bInstagram ?
+                                           <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[7].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_instagram.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                        { this.state.bLinkedin ?
+                                           <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[8].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_linkedin.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                        { this.state.bPinterest ?
+                                           <td style={{ width: "15%" }}><a href={this.state.jsonBlockstack4.account[9].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_pinterest.png" weight="80" height="80" alt=""/></a></td>
+                                        : null }
+                                      </tr>
                                     </tbody>
                                 </Table>
                               </Col>
                               <Col lg="2"></Col>
                             </Row>
-                          :
-                            null
-                          }
-                          <Row>
-                            <Col lg="2"></Col>
-                            <Col lg="8">
-                              <Table size="sm" className="text-center" responsive borderless>
+                          </ListGroupItem>
+                        </ListGroup>
+                        <ListGroup flush>
+                          <ListGroupItem className="p-4 text-center" style={{ backgroundColor: this.state.colorCard }}>
+                            <Row>
+                              <Table size="sm" className="text-center" responsive borderless style={{fontSize:13}}>
                                   <tbody>
-                                    <tr><td className="text-center" style={{fontSize:12, color: this.state.colorLabelEmail}}>Social Networks</td></tr>
-                                  </tbody>
-                              </Table>
-                              <Table size="sm" className="text-center" responsive borderless>
-                                  <tbody>
-                                    <tr>
-                                      { this.state.bFacebook ?
-                                         <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[4].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_facebook.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                      { this.state.bTwitter ?
-                                         <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[5].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_twitter.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                      { this.state.bYoutube ?
-                                         <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[6].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_youtube.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                      { this.state.bInstagram ?
-                                         <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[7].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_instagram.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                      { this.state.bLinkedin ?
-                                         <td style={{ width: "17%" }}><a href={this.state.jsonBlockstack4.account[8].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_linkedin.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                      { this.state.bPinterest ?
-                                         <td style={{ width: "15%" }}><a href={this.state.jsonBlockstack4.account[9].proofUrl} target="_blank" rel="noopener noreferrer"><img src="images/profile_pinterest.png" weight="80" height="80" alt=""/></a></td>
-                                      : null }
-                                    </tr>
-                                  </tbody>
-                              </Table>
-                            </Col>
-                            <Col lg="2"></Col>
-                          </Row>
-                        </ListGroupItem>
-                      </ListGroup>
-                      <ListGroup flush>
-                        <ListGroupItem className="p-4 text-center" style={{ backgroundColor: this.state.colorCard }}>
-                          <Row>
-                            <Table size="sm" className="text-center" responsive borderless style={{fontSize:13}}>
-                                <tbody>
-                                  {this.state.bStxScope ?
-                                     <>
-                                      <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>STX Address</td></tr>
-                                      <tr><td style={{fontSize:24, color: this.state.colorStxSddress}}><strong>{this.state.stxAddress2X}</strong></td></tr>
-                                    </>
-                                  :
-                                    null
-                                  }
-                                  {this.state.bBtcScope ?
-                                     <>
-                                      <tr><td style={{fontSize:12, color: this.state.colorLabelBtcSddress}}>BTC Address</td></tr>
-                                      <tr><td style={{fontSize:24, color: this.state.colorBtcSddress}}><strong>{this.state.jsonBlockstack4.account[2].identifier}</strong></td></tr>
-                                    </>
-                                  :
-                                    null
-                                  }
-                                  {this.state.bEmailScope ?
-                                    <>
-                                      <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>eMail</td></tr>
-                                      <tr><td style={{fontSize:24, color: this.state.colorEmail}}><strong>{this.state.jsonBlockstack4.account[0].identifier}</strong></td></tr>
-                                    </>
-                                  :
-                                     null
-                                  }
-                                  {this.state.bSmsScope ?
-                                     <>
-                                       <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>Phone</td></tr>
-                                       <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[1].smsPrefix}${this.state.jsonBlockstack4.account[1].identifier}`}</strong></td></tr>
-                                     </>
-                                  :
-                                     null
-                                  }
-                                  <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>did:web</td></tr>
-                                  <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[10].identifier}`}</strong></td></tr>
+                                    {this.state.bStxScope ?
+                                       <>
+                                        <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>STX Address</td></tr>
+                                        <tr><td style={{fontSize:24, color: this.state.colorStxSddress}}><strong>{this.state.stxAddress2X}</strong></td></tr>
+                                      </>
+                                    :
+                                      null
+                                    }
+                                    {this.state.bBtcScope ?
+                                       <>
+                                        <tr><td style={{fontSize:12, color: this.state.colorLabelBtcSddress}}>BTC Address</td></tr>
+                                        <tr><td style={{fontSize:24, color: this.state.colorBtcSddress}}><strong>{this.state.jsonBlockstack4.account[2].identifier}</strong></td></tr>
+                                      </>
+                                    :
+                                      null
+                                    }
+                                    {this.state.bEmailScope ?
+                                      <>
+                                        <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>eMail</td></tr>
+                                        <tr><td style={{fontSize:24, color: this.state.colorEmail}}><strong>{this.state.jsonBlockstack4.account[0].identifier}</strong></td></tr>
+                                      </>
+                                    :
+                                       null
+                                    }
+                                    {this.state.bSmsScope ?
+                                       <>
+                                         <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>Phone</td></tr>
+                                         <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[1].smsPrefix}${this.state.jsonBlockstack4.account[1].identifier}`}</strong></td></tr>
+                                       </>
+                                    :
+                                       null
+                                    }
+                                    <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>did:web</td></tr>
+                                    <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[10].identifier}`}</strong></td></tr>
 
-                               </tbody>
+                                 </tbody>
+                              </Table>
+                            </Row>
+                          </ListGroupItem>
+                        </ListGroup>
+                        <ListGroup flush>
+                          <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
+                            <Row>
+                              <Col lg="2"></Col>
+                              <Col lg="8">
+                                 <div className="text-center" style={{fontSize:22, color: this.state.colorClaim}}><a href="https://xck.app" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim" /></a></div>
+                              </Col>
+                              <Col lg="2"></Col>
+                            </Row>
+                            <Row></Row>
+                            <Row>
+                              <Col lg="2"></Col>
+                              <Col lg="8">
+                                 <div className="text-center" style={{fontSize:22, color: this.state.colorClaim2}}><a href="https://domains.paradigma.global/" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim2" /></a></div>
+                              </Col>
+                              <Col lg="2"></Col>
+                            </Row>
+                          </ListGroupItem>
+                        </ListGroup>
+                        <ListGroup flush>
+                          <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
+                            <Row>
+                              <Col lg="2"></Col>
+                              <Col lg="8">
+                                 <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+                              </Col>
+                              <Col lg="2">
+                                <FormCheckbox
+                                  toggle
+                                  checked={this.state.checkedMode}
+                                  onChange={e=>this.handleChangeMode(e,this.state.checkedMode)}>
+                                     Mode
+                                </FormCheckbox>
+                              </Col>
+                            </Row>
+                          </ListGroupItem>
+                        </ListGroup>
+                      </>
+                    :
+                      <>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                        <Row>
+                          <Col lg="2"></Col>
+                          <Col lg="8">
+                            <Table size="sm" borderless responsive className="text-center">
+                                <tbody>
+                                  <tr>
+                                    <td style={{ width: "100%", fontSize:30, color: this.state.color404 }}><FormattedMessage id="profile.profilenotfound" /></td>
+                                  </tr>
+                                </tbody>
                             </Table>
-                          </Row>
-                        </ListGroupItem>
-                      </ListGroup>
-                      <ListGroup flush>
-                        <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
-                          <Row>
-                            <Col lg="2"></Col>
-                            <Col lg="8">
-                               <div className="text-center" style={{fontSize:22, color: this.state.colorClaim}}><a href="https://xck.app" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim" /></a></div>
-                            </Col>
-                            <Col lg="2"></Col>
-                          </Row>
-                          <Row></Row>
-                          <Row>
-                            <Col lg="2"></Col>
-                            <Col lg="8">
-                               <div className="text-center" style={{fontSize:22, color: this.state.colorClaim2}}><a href="https://domains.paradigma.global/" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim2" /></a></div>
-                            </Col>
-                            <Col lg="2"></Col>
-                          </Row>
-                        </ListGroupItem>
-                      </ListGroup>
-                      <ListGroup flush>
-                        <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
-                          <Row>
-                            <Col lg="2"></Col>
-                            <Col lg="8">
-                               <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
-                            </Col>
-                            <Col lg="2">
-                              <FormCheckbox
-                                toggle
-                                checked={this.state.checkedMode}
-                                onChange={e=>this.handleChangeMode(e,this.state.checkedMode)}>
-                                   Mode
-                              </FormCheckbox>
-                            </Col>
-                          </Row>
-                        </ListGroupItem>
-                      </ListGroup>
+                          </Col>
+                          <Col lg="2"></Col>
+                        </Row>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                        <Row>
+                          <Col lg="2"></Col>
+                          <Col lg="8">
+                             <Table size="sm" borderless responsive className="text-center">
+                                <tbody>
+                                  <tr>
+                                    <td style={{ width: "50%" }}><a href={'https://domains.paradigma.global'} target="_blank" rel="noopener noreferrer"><img src="images/domains.svg" weight="90" height="90" alt=""/></a></td>
+                                    <td style={{ width: "50%" }}><a href={'https://xck.app'} target="_blank" rel="noopener noreferrer"><img src="images/crosscheck.svg" weight="90" height="90" alt=""/></a></td>
+                                  </tr>
+                                  <tr>
+                                    <td style={{ width: "50%", fontSize:17, color: this.state.color404 }}>Domains</td>
+                                    <td style={{ width: "50%", fontSize:17, color: this.state.color404 }}>Crosscheck</td>
+                                  </tr>
+                                </tbody>
+                            </Table>
+                          </Col>
+                          <Col lg="2"></Col>
+                        </Row>
+                        <Row>&nbsp;</Row>
+                        <Row>
+                          <Col lg="2"></Col>
+                          <Col lg="8">
+                             <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+                          </Col>
+                          <Col lg="2"></Col>
+                        </Row>
+                        <Row>&nbsp;</Row>
+                        <Row>&nbsp;</Row>
+                      </>
+                    }
                     </>
                   :
                     <>
@@ -489,7 +555,7 @@ class Profile extends React.Component {
                                   <td style={{ width: "100%" }}><img src="images/page-not-found-404.png" weight="150" height="150" alt=""/></td>
                                 </tr>
                                 <tr>
-                                  <td style={{ width: "100%", fontSize:30, color: this.state.color404 }}>Domain name not found, try again!!</td>
+                                  <td style={{ width: "100%", fontSize:30, color: this.state.color404 }}><FormattedMessage id="profile.domainnotfound" /></td>
                                 </tr>
                               </tbody>
                           </Table>
