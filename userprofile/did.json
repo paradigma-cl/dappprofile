@@ -7,9 +7,9 @@
     "type": "Secp256k1",
     "controller": "did:web:support.xck.app",
     "stacksAddress": "SP3VBHA63ZTZFWTBJWHV775WR3PBZ64B26AYX2CF"
-}
-],
+    }
+    ],
     "authentication": [
     "did:web:support.xck.app#controller"
-]
+    ]
 }
