@@ -8,7 +8,8 @@ import {
   Col,
   FormTextarea,
   Container,
-  FormCheckbox
+  FormCheckbox,
+  Button
 } from "shards-react";
 
 import { Table } from 'reactstrap';
@@ -30,6 +31,9 @@ import Loader from '../loader'
 //import jwt from 'jsonwebtoken';
 import jwt_decode from "jwt-decode";
 import * as jose from 'jose'
+
+//QR
+import { QRCode } from 'react-qrcode-logo';
 
 
 class Profile extends React.Component {
@@ -63,6 +67,8 @@ class Profile extends React.Component {
       colorWordDescription: "#ffffff",
       colorPowered: "#595959",
       color404: "#ff8000",
+      colorVcardBackground: "#FFFFFF",
+      colorVcardFont: "#DF7706",
       domainExists: true,
       perfilExists: true,
       bDomainLength: false,
@@ -74,13 +80,79 @@ class Profile extends React.Component {
       bPinterest: true,
       bInstagram: true,
       background: '',
+      modeVcard: 'Inactive',
+      checkedModeVcard: false,
+      checkedModeVcardTelephone: false,
+      checkedModeVcardEmail: false,
+      checkedModeVcardSocialNetwork: false,
+      checkedModeVcardWeb: false,
+      checkedModeVcardId: false,
+      checkedModeVcardNotes: false,
+      dialogOpenQRCode: false,
+      qrCode: '',
     };
   }
 
   componentDidMount() {
-    Promise.all([this.readConfiguration(this.props.userProfile),
+    Promise.all([this.readVcard(this.props.userProfile),
+                 this.readConfiguration(this.props.userProfile),
                  this.readProfile(this.props.userProfile)])
        .then(() => {},() => {})
+  }
+
+  handleQRCodeBefore = (e, action) => {
+    if (this.state.dialogOpenQRCode === false) {
+      this.setState({ dialogOpenQRCode: true });
+      this.handleQRCode(action)
+    }else{
+      this.setState({ dialogOpenQRCode: false });
+    }
+  }
+
+  handleQRCodeBeforeVcard = (e, action) => {
+    this.handleQRCode(action)
+  }
+
+  handleQRCode = (action) => {
+        var vCardsJS = require('vcards-js');
+        //create a new vCard instance
+        var vCard = vCardsJS();
+        //set properties
+        vCard.firstName = this.state.jsonBlockstack4.name;
+        if (this.state.checkedModeVcardId){
+           //vCard.organization = this.state.jsonBlockstack4.account[10].identifier;
+        }
+        if (this.state.checkedModeVcardTelephone){
+           vCard.workPhone = `${this.state.jsonBlockstack4.account[1].smsPrefix}${this.state.jsonBlockstack4.account[1].identifier}`;
+        }
+        if (this.state.checkedModeVcardEmail){
+           vCard.workEmail = this.state.jsonBlockstack4.account[0].identifier;
+        }
+        if (this.state.checkedModeVcardWeb){
+           //vCard.url = this.state.jsonBlockstack4.web;
+        }
+        if (this.state.checkedModeVcardSocialNetwork){
+           //set social media URLs
+           //vCard.socialUrls['facebook'] = this.state.jsonBlockstack4.account[4].proofUrl;
+           //vCard.socialUrls['twitter'] = this.state.jsonBlockstack4.account[5].proofUrl;
+           //vCard.socialUrls['youtube'] = this.state.jsonBlockstack4.account[6].proofUrl;
+           //vCard.socialUrls['instagram'] = this.state.jsonBlockstack4.account[7].proofUrl;
+           //vCard.socialUrls['linkedin'] = this.state.jsonBlockstack4.account[8].proofUrl;
+           //vCard.socialUrls['pinterest'] = this.state.jsonBlockstack4.account[9].proofUrl;
+        }
+        if (this.state.checkedModeVcardNotes){
+           //vCard.note = this.state.jsonBlockstack4.description;
+        }
+        vCard.version = '4.0';
+        //console.log(vCard.getFormattedString());
+        const arrayId = this.props.userProfile.split('.')
+        const nameId =  arrayId[0]
+        const blob = new Blob([ vCard.getFormattedString() ], {type: "text/vcard;charset=utf-8"});
+        this.setState({ qrCode: vCard.getFormattedString() });
+        if (action === 'download'){
+          const FileSaver = require('file-saver');
+          FileSaver.saveAs(blob, `${nameId}.vcf`);
+        }
   }
 
   handleChangeMode = (e,modeX) => {
@@ -101,7 +173,9 @@ class Profile extends React.Component {
            colorPhone: "#ffffff",
            colorWordDescription: "#ffffff",
            colorPowered: "#595959",
-           color404: "#ff8000"})
+           color404: "#ff8000",
+           colorVcardBackground: "#FFFFFF",
+           colorVcardFont: "#DF7706"})
     }else {
       this.setState({
           colorCard: "white",
@@ -119,7 +193,9 @@ class Profile extends React.Component {
           colorPhone: "#000066",
           colorWordDescription: "#000000",
           colorPowered: "#595959",
-          color404: "#cccccc"})
+          color404: "#cccccc",
+          colorVcardBackground: "#cccccc",
+          colorVcardFont: "#000066"})
     }
     this.setState({checkedMode: !modeX});
   }
@@ -231,7 +307,6 @@ class Profile extends React.Component {
           this.setState({stxAddress2X:result.data.address})
           const zoneFileJson = parseZoneFile(result.data.zonefile)
           const zonefile4 = zoneFileJson.uri[0].target
-          let e=''
           axios.get(zonefile4)
              .then(result => {
                 const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -276,7 +351,10 @@ class Profile extends React.Component {
                             colorPhone: "#000066",
                             colorWordDescription: "#000000",
                             colorPowered: "#595959",
-                            color404: "#cccccc"})
+                            color404: "#cccccc",
+                            colorVcardBackground: "#FFFFFF",
+                            colorVcardFont: "#DF7706"
+                          })
                       }
                       resolve1()
                     } else {
@@ -299,14 +377,112 @@ class Profile extends React.Component {
     });
   }
 
+  readVcard = (userX) => {
+    return new Promise ((resolve1, reject1) =>{
+      if (userX === undefined || userX === null || userX === ''){reject1()}
+      var nameLookupURL = "https://stacks-node-api.mainnet.stacks.co/v1/names/" + userX;
+      axios.get(nameLookupURL)
+        .then(result => {
+          this.setState({stxAddress2X:result.data.address})
+          const zoneFileJson = parseZoneFile(result.data.zonefile)
+          const zonefile4 = zoneFileJson.uri[0].target
+          axios.get(zonefile4)
+             .then(result => {
+                const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
+                let jsonBlockstack2 = jsonBlockstack1
+                let jsonBlockstack4 = {}
+                if (window.location.origin === 'http://localhost:3000'){
+                   jsonBlockstack2 = jsonBlockstack1.replace(`"http://localhost:3000":`,`"localhost":`);
+                   const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                   jsonBlockstack4 = jsonBlockstack3.localhost
+                }else{
+                  jsonBlockstack2 = jsonBlockstack1.replace(`"https://xck.app":`,`"xckapp":`);
+                  const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                  jsonBlockstack4 = jsonBlockstack3.xckapp
+                }
+                const {storage} = jsonBlockstack4
+                const getFile = storage + `vcardprofile.json`
+                axios.get(getFile)
+                  .then((fileContents) => {
+                    if(fileContents) {
+                      const jsonBlockstack1 = fileContents.data.replace(/\\/g,"")
+                      let jsonBlockstack3 = jsonBlockstack1
+                      if (jsonBlockstack1.substring(0,1)==='"') {
+                         jsonBlockstack3 = jsonBlockstack1.substring(1,jsonBlockstack1.length - 1);
+                      }
+                      const jsonBlockstack4 = JSON.parse(jsonBlockstack3)
+                      this.setState({ modeVcard: jsonBlockstack4.mode });
+                      if (jsonBlockstack4.mode === 'Active'){
+                          this.setState({checkedModeVcard: true});
+                      }else{
+                          this.setState({checkedModeVcard: false});
+                      }
+
+                      if (jsonBlockstack4.telephone === 'true'){
+                           this.setState({checkedModeVcardTelephone: true});
+                      }else{
+                           this.setState({checkedModeVcardTelephone: false});
+                      }
+                      if (jsonBlockstack4.email === 'true'){
+                           this.setState({checkedModeVcardEmail: true});
+                      }else{
+                           this.setState({checkedModeVcardEmail: false});
+                      }
+                      if (jsonBlockstack4.socialnetwork === 'true'){
+                           this.setState({checkedModeVcardSocialNetwork: true});
+                      }else{
+                           this.setState({checkedModeVcardSocialNetwork: false});
+                      }
+                      if (jsonBlockstack4.web === 'true'){
+                           this.setState({checkedModeVcardWeb: true});
+                      }else{
+                           this.setState({checkedModeVcardWeb: false});
+                      }
+                      if (jsonBlockstack4.id === 'true'){
+                           this.setState({checkedModeVcardId: true});
+                      }else{
+                           this.setState({checkedModeVcardId: false});
+                      }
+                      if (jsonBlockstack4.notes === 'true'){
+                           this.setState({checkedModeVcardNotes: true});
+                      }else{
+                           this.setState({checkedModeVcardNotes: false});
+                      }
+                      resolve1()
+                    } else {
+                      resolve1()
+                    }
+                  })
+                  .catch(error => {
+                     console.log(error)
+                  });
+             })
+           .catch(error => {
+             console.log(error)
+             reject1()
+           });
+        })
+        .catch(error => {
+           console.log(error)
+           reject1()
+        });
+    });
+  }
 
   render() {
-
     const avatar2 = 'images/avatar.png'
     let urlImg = 'images/background_profile.png'
     if (this.state.backgound !== ''){
        urlImg = this.state.background
     }
+
+    const checkedModeVcardX = this.state.checkedModeVcard
+    const qrCodex = this.state.qrCode
+    const dialogOpenQRCodeX = this.state.dialogOpenQRCode
+
+    const arrayId = this.props.userProfile
+    const arrayId2 = arrayId.split('.')
+    const nameId = `${arrayId2[0]}.vcf`
 
     return (
       <div id="profile" style={{backgroundImage: `url(${urlImg})`, backgroundAttachment: 'fixed', overflow: 'auto', position: 'absolute', width: '100%',	height: '100%'}}>
@@ -467,6 +643,41 @@ class Profile extends React.Component {
                               </Row>
                             </ListGroupItem>
                           </ListGroup>
+                          { dialogOpenQRCodeX ?
+                            <>
+                              <Row form>&nbsp;</Row>
+                              <Row>
+                                <Col lg="2"></Col>
+                                <Col lg="8">
+                                    <Card small className="mb-4 pt-3" style={{ backgroundColor: this.state.colorCard }}>
+                                     <div style={{ textAlign:"center" }}>
+                                        <QRCode value={qrCodex}
+                                                eyeRadius={5}
+                                                size={180}
+                                                qrStyle={"squares"}
+                                                bgColor={this.state.colorVcardBackground}
+                                                fgColor={this.state.colorVcardFont}
+                                                quietZone={10}
+                                                ecLevel={"M"}
+                                        />
+                                        <Row form>&nbsp;</Row>
+                                        <Row>
+                                          <Col lg="12">
+                                            <div style={{ textAlign:"center" }}>
+                                              <Button outline pill theme="primary" onClick={e=>this.handleQRCodeBeforeVcard(e,'download')}>{`Download Vcard = ${nameId}`}</Button>
+                                            </div>
+                                          </Col>
+                                        </Row>
+                                        <Row form>&nbsp;</Row>
+                                     </div>
+                                   </Card>
+                                </Col>
+                                <Col lg="2"></Col>
+                              </Row>
+                              <Row form>&nbsp;</Row>
+                            </>
+                          : null
+                          }
                           <ListGroup flush>
                             <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
                               <Row>
@@ -489,7 +700,12 @@ class Profile extends React.Component {
                           <ListGroup flush>
                             <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
                               <Row>
-                                <Col lg="2"></Col>
+                                <Col lg="2">
+                                    {checkedModeVcardX ?
+                                      <Button outline pill theme="primary" onClick={e=>this.handleQRCodeBefore(e,'')}>Vcard</Button>
+                                    : null
+                                    }
+                                </Col>
                                 <Col lg="8">
                                    <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
                                 </Col>
