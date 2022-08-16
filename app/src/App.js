@@ -4,6 +4,8 @@ import React, { PureComponent } from 'react';
 // Components
 import Profile from './components/profile/profile.js';
 import DisplayJson from './components/displayjson/displayjson.js';
+import DisplayDidW3c from './components/displayjson/displaydidw3c.js';
+import VerifyPdf from './components/verifypdf/verifypdf.js';
 
 // Translate
 import { IntlProvider } from "react-intl";
@@ -57,14 +59,41 @@ class App extends PureComponent {
     let userProfile = ArrayIdValue[1]
 
     let bDisplayProfile = false
+    let bDisplayDidW3c = false
+    let bVerifyPdf = false
+    let codeVerifyPdf = ''
     if (window.location.search === '?profile'){
-       bDisplayProfile = true
+      bDisplayProfile = true
+    }
+    if (window.location.search === '?did.json'){
+      bDisplayProfile = true
+      bDisplayDidW3c = true
+    }
+
+    const pdfX = window.location.search
+    let pdfX2 = pdfX.substring(0,5)
+    if (pdfX2 === '?pdf:'){
+      codeVerifyPdf =  pdfX.substring(5)
+      bDisplayProfile = true
+      bVerifyPdf = true
     }
 
     return (
       <IntlProvider locale={language3} messages={this.state.messages[language3]}>
            {bDisplayProfile ?
-               <DisplayJson userProfile={userProfile} language={language3} />
+               <>
+               {bDisplayDidW3c ?
+                 <DisplayDidW3c userProfile={userProfile} language={language3} />
+               :
+                 <>
+                 {bVerifyPdf ?
+                   <VerifyPdf userProfile={userProfile} language={language3} codeVerifyPdf={codeVerifyPdf} />
+                 :
+                   <DisplayJson userProfile={userProfile} language={language3} />
+                 }
+                 </>
+               }
+               </>
            :
                <Profile userProfile={userProfile} language={language3} />
            }
