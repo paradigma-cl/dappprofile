@@ -13,14 +13,10 @@ import { parseZoneFile } from 'zone-file'
 //loader
 import Loader from '../loader'
 
-//JWT
-//import jwt from 'jsonwebtoken';
-import jwt_decode from "jwt-decode";
-
 //JSON Formatter
 import JsonFormatter from 'react-json-formatter'
 
-class DisplayJson extends React.Component {
+class DisplayDidW3c extends React.Component {
   constructor() {
     super();
 
@@ -57,14 +53,11 @@ class DisplayJson extends React.Component {
                   jsonBlockstack4 = jsonBlockstack3.xckapp
                 }
                 const {storage} = jsonBlockstack4
-                const getFile = storage + `profile.json`
+                const getFile = storage + `didw3c.json`
                 axios.get(getFile)
                   .then((fileContents) => {
                   if(fileContents) {
-                      const jwtToken = fileContents.data
-                      const jwtDecoded = jwt_decode(jwtToken);
-                      let jsonBlockstack5 = jwtDecoded[0]
-
+                    const jsonBlockstack5 = fileContents.data
                       this.setState({jsonBlockstack5: JSON.stringify(jsonBlockstack5)})
                       resolve1()
                     } else {
@@ -134,4 +127,4 @@ class DisplayJson extends React.Component {
   }
 };
 
-export default DisplayJson;
+export default DisplayDidW3c;
