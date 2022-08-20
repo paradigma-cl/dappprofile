@@ -13,6 +13,7 @@ class VerifyPdf extends Component {
       const userOrigin = ArrayIdValue2[2]
       const whatUserRole = ArrayIdValue2[3]
       const description = ArrayIdValue2[4]
+
       return (
         <Container fluid className="main-content-container px-4" >
               <Row>&nbsp;</Row>

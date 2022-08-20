@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MyDocument from "./generatepdf";
 
 //Axios
 import axios from 'axios';
@@ -14,6 +13,11 @@ import './viewerpdf.css'
 import Loader from '../loader'
 
 import { EditorState, convertFromRaw } from 'draft-js';
+
+import { Base64 } from 'js-base64';
+
+import MyDocument from "./generatepdf";
+import {getTransactionRegister} from "./clarityfunctions"
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
@@ -37,6 +41,9 @@ class ViewerPdf extends Component {
           cryptoCurrency: null,
           saldodocumento: null,
           contentStateRaw: null,
+          filedecodeAttachX: {},
+          fileAttachX: {},
+          getTransaction: '',
         }
     }
 
@@ -45,7 +52,9 @@ class ViewerPdf extends Component {
       Promise.all([
                    this.getAgreement(networkUrlX),
                    this.goSignListNames(this.props.typeContract,this.props.numberContract,this.props.userRole,this.props.userOrigin,networkUrlX),
-                   this.getDetailPaymentFormsNames(networkUrlX)
+                   this.getDetailPaymentFormsNames(networkUrlX),
+                   this.getUploadedDetailNames(networkUrlX),
+                   this.getTransactionRegisterNames(networkUrlX)
                  ])
         .then((resolve) =>{},(reject) =>{})
     }
@@ -216,6 +225,7 @@ class ViewerPdf extends Component {
                           }
                         })
                         .catch(error => {
+                          console.log(error)
                           resolve5()
                         });
                     });
@@ -268,14 +278,17 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      console.log(error)
                       reject6()
                     });
                })
              .catch(error => {
+               console.log(error)
                reject6()
              });
           })
           .catch(error => {
+            console.log(error)
             reject6()
           });
       });
@@ -316,14 +329,17 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      console.log(error)
                       reject7();
                     });
                })
              .catch(error => {
+               console.log(error)
                reject7()
              });
           })
           .catch(error => {
+            console.log(error)
             reject7()
           });
       });
@@ -351,7 +367,6 @@ class ViewerPdf extends Component {
                     jsonBlockstack4 = jsonBlockstack3.xckapp
                   }
                   const {storage} = jsonBlockstack4
-                  // if (this.props.typeContract === 'blank')
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_blankdetail.json`
                   axios.get(getFile)
                     .then((fileContents) => {
@@ -365,18 +380,138 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      console.log(error)
                       reject8();
                     });
                })
              .catch(error => {
+               console.log(error)
                reject8()
              });
           })
           .catch(error => {
+            console.log(error)
             reject8()
           });
       });
     }
+
+    getUploadedDetailNames = (networkUrlX) => {
+      return new Promise ((resolve9, reject9) =>{
+        var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
+        axios.get(nameLookupURL)
+          .then(result => {
+            const zoneFileJson = parseZoneFile(result.data.zonefile)
+            const zonefile4 = zoneFileJson.uri[0].target
+            axios.get(zonefile4)
+               .then(result => {
+                  const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
+                  let jsonBlockstack2 = jsonBlockstack1
+                  let jsonBlockstack4 = {}
+                  if (window.location.origin === 'http://localhost:3000'){
+                     jsonBlockstack2 = jsonBlockstack1.replace(`"http://localhost:3000":`,`"localhost":`);
+                     const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                     jsonBlockstack4 = jsonBlockstack3.localhost
+                  }else{
+                    jsonBlockstack2 = jsonBlockstack1.replace(`"https://xck.app":`,`"xckapp":`);
+                    const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                    jsonBlockstack4 = jsonBlockstack3.xckapp
+                  }
+                  const {storage} = jsonBlockstack4
+                  const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_uploadeddetail.json`
+                  axios.get(getFile)
+                    .then((fileContents) => {
+                      if(fileContents) {
+                        const jsonBlockstack1 = fileContents.data.replace(/\\/g,"")
+                        let jsonBlockstack3 = jsonBlockstack1
+                        if (jsonBlockstack1.substring(0,1)==='"' || jsonBlockstack1.substring(0,1)==='[]') {
+                           jsonBlockstack3 = jsonBlockstack1.substring(1,jsonBlockstack1.length - 1);
+                        }
+                        let jsonBlockstack4 = JSON.parse(jsonBlockstack3)
+                        const file64 = jsonBlockstack4.file
+                        const file = Base64.decode(file64);
+                        this.setState({filedecodeAttachX: file, fileAttachX: file64 })
+                        resolve9()
+                      } else {
+                          resolve9()
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error)
+                      reject9()
+                    });
+               })
+             .catch(error => {
+               console.log(error)
+               reject9()
+             });
+          })
+          .catch(error => {
+            console.log(error)
+            reject9()
+          });
+      });
+    }
+
+    getTransactionRegisterNames = (networkUrlX) => {
+      return new Promise ((resolve10, reject10) =>{
+        var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
+        let jsonBlockstack4 = []
+        axios.get(nameLookupURL)
+          .then(result => {
+            const zoneFileJson = parseZoneFile(result.data.zonefile)
+            const zonefile4 = zoneFileJson.uri[0].target
+            axios.get(zonefile4)
+              .then(result => {
+                const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
+                let jsonBlockstack2 = jsonBlockstack1
+                let jsonBlockstack4 = {}
+                if (window.location.origin === 'http://localhost:3000'){
+                   jsonBlockstack2 = jsonBlockstack1.replace(`"http://localhost:3000":`,`"localhost":`);
+                   const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                   jsonBlockstack4 = jsonBlockstack3.localhost
+                }else{
+                  jsonBlockstack2 = jsonBlockstack1.replace(`"https://xck.app":`,`"xckapp":`);
+                  const jsonBlockstack3 = JSON.parse(jsonBlockstack2)
+                  jsonBlockstack4 = jsonBlockstack3.xckapp
+                }
+                const {storage} = jsonBlockstack4
+                  const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}.json`
+                  axios.get(getFile)
+                    .then((fileContents) => {
+                      if(fileContents) {
+                        const jsonBlockstack1 = JSON.parse(fileContents.data)
+                        const txId = jsonBlockstack1.registerTxId
+                        if (txId !== undefined){
+                          if (txId !== null && txId !== '' ) {
+                            getTransactionRegister(networkUrlX, txId)
+                              .then(val => {
+                                 this.setState({ getTransaction: val })
+                              })
+                          }
+                        }
+                        resolve10();
+                      } else {
+                        resolve10();
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error)
+                      reject10();
+                    });
+               })
+             .catch(error => {
+               console.log(error)
+               reject10()
+             });
+          })
+          .catch(error => {
+            console.log(error)
+            reject10()
+          });
+      });
+    }
+
 
     render() {
       let jsonBlockstack5X = false
@@ -395,7 +530,9 @@ class ViewerPdf extends Component {
                           jsonBlockstackFormPago={this.state.jsonBlockstackFormPago}
                           originMoney={this.state.originMoney}
                           usernameX={this.props.username}
-                          userOrigin={this.props.userOrigin} />
+                          userOrigin={this.props.userOrigin}
+                          filedecodeAttachX={this.state.filedecodeAttachX}
+                          getTransaction={this.state.getTransaction} />
         :
           <Loader />
         }
