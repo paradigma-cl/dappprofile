@@ -53,6 +53,17 @@ class App extends PureComponent {
     if (language3 !=='en' && language3 !=='es' && language3 !=='fr' && language3 !=='pt' && language3 !=='sv' && language3 !=='nl' && language3 !=='ru' && language3 !=='jp' && language3 !=='cn' && language3 !=='de' && language3 !=='it'){
       language3 ='en'
     }
+    if (language3 === 'en'){localStorage.setItem('language','English')}
+    if (language3 === 'es'){localStorage.setItem('language','Spanish')}
+    if (language3 === 'fr'){localStorage.setItem('language','French')}
+    if (language3 === 'pt'){localStorage.setItem('language','Portuguese')}
+    if (language3 === 'sv'){localStorage.setItem('language','Swedish')}
+    if (language3 === 'nl'){localStorage.setItem('language','Netherlands')}
+    if (language3 === 'ru'){localStorage.setItem('language','Russian')}
+    if (language3 === 'jp'){localStorage.setItem('language','Japanese')}
+    if (language3 === 'cn'){localStorage.setItem('language','Chinese')}
+    if (language3 === 'de'){localStorage.setItem('language','German')}
+    if (language3 === 'it'){localStorage.setItem('language','Italian')}
 
     const userProfileX = window.location.origin;
     const ArrayIdValue = userProfileX.split('https://')
