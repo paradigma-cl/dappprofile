@@ -32,7 +32,8 @@ class VerifyPdf extends Component {
                                       whatUserRole={whatUserRole}
                                       description={description}
                                       username={this.props.userProfile}
-                                      usernameX={this.props.userProfile} />
+                                      usernameX={this.props.userProfile}
+                                      language={this.props.language} />
                          </div>
                       </Col>
                      <Col lg="1"></Col>

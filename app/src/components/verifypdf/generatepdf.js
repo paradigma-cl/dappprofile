@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Container, Card, Row, Col } from "shards-react";
 import { Table } from 'reactstrap';
 import MyViewerPdf from './myviewerpdf';
-
+import { FormattedMessage } from 'react-intl';
 
 class MyDocument extends Component {
 
@@ -12,15 +12,6 @@ class MyDocument extends Component {
         this.state = {
           languageX: 'English',
         }
-    }
-
-    UNSAFE_componentWillMount() {
-      const languageX = localStorage.getItem('language')
-      if (languageX === undefined || languageX === ''){
-        this.setState({ language: 'English'})
-      }else{
-        this.setState({ language: languageX })
-      }
     }
 
     render() {
@@ -42,41 +33,41 @@ class MyDocument extends Component {
       let totalsX = 'Totals'
       let registrationX = 'Blockchain Registration'
       let suscritoX = 'Document signed by digital signature'
-      if (this.state.language === 'English'){ paymentFormX = 'Payment Method'; signatoriesX = 'Signatories'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Agreement Document"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'French'){ paymentFormX = 'Mode de Paiement'; signatoriesX = 'Signataires'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Document d'accord"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Spanish'){ paymentFormX = 'Forma de Pago'; signatoriesX = 'Firmantes'; signatureX = 'Firma'; nameX = 'Nombre'; titleX = "Documento de Acuerdo"; itemX = "Item"; conceptX = "Concepto"; estimatedDateX = "Fecha Estimada"; percentX = "Porcentaje"; amountX = "Monto"; docVerifyX = 'Verificación Documento de Acuerdo'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Asunto'}
-      if (this.state.language === 'Portuguese'){ paymentFormX = 'Forma de pagamento'; signatoriesX = 'Signatários'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Documento de Acuerdo"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Swedish'){ paymentFormX = 'Betalningsmetod'; signatoriesX = 'Undertecknare'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Avtalsdokument"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Netherlands'){ paymentFormX = 'Betalingswijze'; signatoriesX = 'Ondertekenaars'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Overeenkomst document"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Russian'){ paymentFormX = 'Способ оплаты'; signatoriesX = 'Подписавшие'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Документ соглашения"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Japanese'){ paymentFormX = '支払方法'; signatoriesX = '署名者'; signatureX = 'Signature'; nameX = 'Name'; titleX = "契約書"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Chinese'){ paymentFormX = '付款方法'; signatoriesX = '簽署人'; signatureX = 'Signature'; nameX = 'Name'; titleX = "协议文件"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'German'){ paymentFormX = 'Zahlungsmethode'; signatoriesX = 'Unterzeichner'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Einverständniserklärung"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
-      if (this.state.language === 'Italian'){ paymentFormX = 'Metodo di pagamento'; signatoriesX = 'Firmatari'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Documento di accordo"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'en'){ paymentFormX = 'Payment Method'; signatoriesX = 'Signatories'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Agreement Document"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'fr'){ paymentFormX = 'Mode de Paiement'; signatoriesX = 'Signataires'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Document d'accord"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'es'){ paymentFormX = 'Forma de Pago'; signatoriesX = 'Firmantes'; signatureX = 'Firma'; nameX = 'Nombre'; titleX = "Documento de Acuerdo"; itemX = "Item"; conceptX = "Concepto"; estimatedDateX = "Fecha Estimada"; percentX = "Porcentaje"; amountX = "Monto"; docVerifyX = 'Verificación Documento de Acuerdo'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Asunto'}
+      if (this.props.language === 'pt'){ paymentFormX = 'Forma de pagamento'; signatoriesX = 'Signatários'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Documento de Acuerdo"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'sv'){ paymentFormX = 'Betalningsmetod'; signatoriesX = 'Undertecknare'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Avtalsdokument"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'nl'){ paymentFormX = 'Betalingswijze'; signatoriesX = 'Ondertekenaars'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Overeenkomst document"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'ru'){ paymentFormX = 'Способ оплаты'; signatoriesX = 'Подписавшие'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Документ соглашения"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'jp'){ paymentFormX = '支払方法'; signatoriesX = '署名者'; signatureX = 'Signature'; nameX = 'Name'; titleX = "契約書"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'cn'){ paymentFormX = '付款方法'; signatoriesX = '簽署人'; signatureX = 'Signature'; nameX = 'Name'; titleX = "协议文件"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'de'){ paymentFormX = 'Zahlungsmethode'; signatoriesX = 'Unterzeichner'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Einverständniserklärung"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
+      if (this.props.language === 'it'){ paymentFormX = 'Metodo di pagamento'; signatoriesX = 'Firmatari'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Documento di accordo"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
 
-      if (this.state.language === 'English'){ digitallysignedX = 'Digitally signed by '; withdateX = 'With date '; totalsX = 'Totals'; registrationX = 'Blockchain Registration'}
-      if (this.state.language === 'French'){ digitallysignedX = 'Signé numériquement par '; withdateX = 'Avec date '; totalsX = 'Totaux'; registrationX = 'Enregistrement de la blockchain'}
-      if (this.state.language === 'Spanish'){ digitallysignedX = 'Firmado digitalmente por '; withdateX = 'Con fecha '; totalsX = 'Totales'; registrationX = 'Registro Blockchain'}
-      if (this.state.language === 'Portuguese'){ digitallysignedX = 'Assinado digitalmente por '; withdateX = 'Com data '; totalsX = 'Totais'; registrationX = 'Registro de Blockchain'}
-      if (this.state.language === 'Swedish'){ digitallysignedX = 'Digitalt signerad av '; withdateX = 'Med datum '; totalsX = 'Summor'; registrationX = 'Blockchain registrering'}
-      if (this.state.language === 'Netherlands'){ digitallysignedX = 'Digitaal ondertekend door '; withdateX = 'Met datum '; totalsX = 'Totalen'; registrationX = 'Blockchain-registratie'}
-      if (this.state.language === 'Russian'){ digitallysignedX = 'Цифровая подпись '; withdateX = 'С датой '; totalsX = 'Итоги'; registrationX = 'Блокчейн Регистрация'}
-      if (this.state.language === 'Japanese'){ digitallysignedX = 'デジタル署名者 '; withdateX = '日付付き '; totalsX = '合計'; registrationX = 'ブロックチェーン登録'}
-      if (this.state.language === 'Chinese'){ digitallysignedX = '數字簽名者 '; withdateX = '有日期 '; totalsX = '總計'; registrationX = '區塊鏈註冊'}
-      if (this.state.language === 'German'){ digitallysignedX = 'Digital signiert von '; withdateX = 'Mit Datum '; totalsX = 'Summen'; registrationX = 'Blockchain-Registrierung'}
-      if (this.state.language === 'Italian'){ digitallysignedX = 'Firmato digitalmente da '; withdateX = 'Con data '; totalsX = 'Totali'; registrationX = 'Registrazione Blockchain'}
+      if (this.props.language === 'en'){ digitallysignedX = 'Digitally signed by '; withdateX = 'With date '; totalsX = 'Totals'; registrationX = 'Blockchain Registration'}
+      if (this.props.language === 'fr'){ digitallysignedX = 'Signé numériquement par '; withdateX = 'Avec date '; totalsX = 'Totaux'; registrationX = 'Enregistrement de la blockchain'}
+      if (this.props.language === 'sp'){ digitallysignedX = 'Firmado digitalmente por '; withdateX = 'Con fecha '; totalsX = 'Totales'; registrationX = 'Registro Blockchain'}
+      if (this.props.language === 'pt'){ digitallysignedX = 'Assinado digitalmente por '; withdateX = 'Com data '; totalsX = 'Totais'; registrationX = 'Registro de Blockchain'}
+      if (this.props.language === 'sv'){ digitallysignedX = 'Digitalt signerad av '; withdateX = 'Med datum '; totalsX = 'Summor'; registrationX = 'Blockchain registrering'}
+      if (this.props.language === 'nl'){ digitallysignedX = 'Digitaal ondertekend door '; withdateX = 'Met datum '; totalsX = 'Totalen'; registrationX = 'Blockchain-registratie'}
+      if (this.props.language === 'ru'){ digitallysignedX = 'Цифровая подпись '; withdateX = 'С датой '; totalsX = 'Итоги'; registrationX = 'Блокчейн Регистрация'}
+      if (this.props.language === 'jp'){ digitallysignedX = 'デジタル署名者 '; withdateX = '日付付き '; totalsX = '合計'; registrationX = 'ブロックチェーン登録'}
+      if (this.props.language === 'cn'){ digitallysignedX = '數字簽名者 '; withdateX = '有日期 '; totalsX = '總計'; registrationX = '區塊鏈註冊'}
+      if (this.props.language === 'de'){ digitallysignedX = 'Digital signiert von '; withdateX = 'Mit Datum '; totalsX = 'Summen'; registrationX = 'Blockchain-Registrierung'}
+      if (this.props.language === 'it'){ digitallysignedX = 'Firmato digitalmente da '; withdateX = 'Con data '; totalsX = 'Totali'; registrationX = 'Registrazione Blockchain'}
 
-      if (this.state.language === 'English'){ suscritoX = 'Document signed by digital signature'; }
-      if (this.state.language === 'French'){ suscritoX = 'Document signé par signature numérique'; }
-      if (this.state.language === 'Spanish'){ suscritoX = 'Documento suscrito mediante firma digital'; }
-      if (this.state.language === 'Portuguese'){ suscritoX = 'Documento assinado por assinatura digital'; }
-      if (this.state.language === 'Swedish'){ suscritoX = 'Dokument signerat med digital signatur'; }
-      if (this.state.language === 'Netherlands'){ suscritoX = 'Document ondertekend met digitale handtekening'; }
-      if (this.state.language === 'Russian'){ suscritoX = 'Документ, подписанный электронной цифровой подписью'; }
-      if (this.state.language === 'Japanese'){ suscritoX = 'デジタル署名によって署名されたドキュメント'; }
-      if (this.state.language === 'Chinese'){ suscritoX = '由數字簽名簽署的文件'; }
-      if (this.state.language === 'German'){ suscritoX = 'Dokument mit digitaler Signatur signiert'; }
-      if (this.state.language === 'Italian'){ suscritoX = 'Documento firmato con firma digitale'; }
+      if (this.props.language === 'en'){ suscritoX = 'Document signed by digital signature'; }
+      if (this.props.language === 'fr'){ suscritoX = 'Document signé par signature numérique'; }
+      if (this.props.language === 'es'){ suscritoX = 'Documento suscrito mediante firma digital'; }
+      if (this.props.language === 'pt'){ suscritoX = 'Documento assinado por assinatura digital'; }
+      if (this.props.language === 'sv'){ suscritoX = 'Dokument signerat med digital signatur'; }
+      if (this.props.language === 'nl'){ suscritoX = 'Document ondertekend met digitale handtekening'; }
+      if (this.props.language === 'ru'){ suscritoX = 'Документ, подписанный электронной цифровой подписью'; }
+      if (this.props.language === 'jp'){ suscritoX = 'デジタル署名によって署名されたドキュメント'; }
+      if (this.props.language === 'cn'){ suscritoX = '由數字簽名簽署的文件'; }
+      if (this.props.language === 'de'){ suscritoX = 'Dokument mit digitaler Signatur signiert'; }
+      if (this.props.language === 'it'){ suscritoX = 'Documento firmato con firma digitale'; }
 
 
       let textX = {}
@@ -98,7 +89,7 @@ class MyDocument extends Component {
       const filedecodeAttachX = this.props.filedecodeAttachX
 
       let languageSpanishX = false
-      if (this.state.language === 'Spanish'){
+      if (this.props.language === 'es'){
          languageSpanishX = true
       }
 
@@ -251,7 +242,9 @@ class MyDocument extends Component {
            <Row>
              <Col lg="2"></Col>
              <Col lg="8">
-                <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+               <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>
+                   <FormattedMessage id="profile.poweredby" /><a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a><FormattedMessage id="profile.with" /><a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a><FormattedMessage id="profile.and" /><a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology
+               </div>
              </Col>
              <Col lg="2"></Col>
            </Row>

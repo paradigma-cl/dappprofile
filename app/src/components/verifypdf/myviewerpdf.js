@@ -55,28 +55,19 @@ class MyViewerPdf extends Component {
     this.setState({ scale: this.cScale.current.value });
   }
 
-  UNSAFE_componentWillMount() {
-    const languageX = localStorage.getItem('language')
-    if (languageX === undefined || languageX === ''){
-      this.setState({ language: 'English' })
-    }else{
-      this.setState({ language: languageX })
-    }
-  }
-
   renderPagination() {
     let contractPageX = ''
-    if (this.state.language === 'English'){contractPageX = `${this.state.page} of ${this.state.pages}`}
-    if (this.state.language === 'French'){contractPageX = `${this.state.page} de ${this.state.pages}`}
-    if (this.state.language === 'Spanish'){contractPageX = `${this.state.page} de ${this.state.pages}`}
-    if (this.state.language === 'Portuguese'){contractPageX = `${this.state.page} do ${this.state.pages}`}
-    if (this.state.language === 'Swedish'){contractPageX = `${this.state.page} av ${this.state.pages}`}
-    if (this.state.language === 'Netherlands'){contractPageX = `${this.state.page} van ${this.state.pages}`}
-    if (this.state.language === 'Russian'){contractPageX = `${this.state.page} из ${this.state.pages}`}
-    if (this.state.language === 'Japanese'){contractPageX = `${this.state.page} の ${this.state.pages}`}
-    if (this.state.language === 'Chinese'){contractPageX = `${this.state.page} 的 ${this.state.pages}`}
-    if (this.state.language === 'German'){contractPageX = `${this.state.page} von ${this.state.pages}`}
-    if (this.state.language === 'Italian'){contractPageX = `${this.state.page} di ${this.state.pages}`}
+    if (this.props.language === 'en'){contractPageX = `${this.state.page} of ${this.state.pages}`}
+    if (this.props.language === 'fr'){contractPageX = `${this.state.page} de ${this.state.pages}`}
+    if (this.props.language === 'es'){contractPageX = `${this.state.page} de ${this.state.pages}`}
+    if (this.props.language === 'pt'){contractPageX = `${this.state.page} do ${this.state.pages}`}
+    if (this.props.language === 'sv'){contractPageX = `${this.state.page} av ${this.state.pages}`}
+    if (this.props.language === 'nl'){contractPageX = `${this.state.page} van ${this.state.pages}`}
+    if (this.props.language === 'ru'){contractPageX = `${this.state.page} из ${this.state.pages}`}
+    if (this.props.language === 'jp'){contractPageX = `${this.state.page} の ${this.state.pages}`}
+    if (this.props.language === 'cn'){contractPageX = `${this.state.page} 的 ${this.state.pages}`}
+    if (this.props.language === 'de'){contractPageX = `${this.state.page} von ${this.state.pages}`}
+    if (this.props.language === 'it'){contractPageX = `${this.state.page} di ${this.state.pages}`}
     return (
       <>
         <Row form>

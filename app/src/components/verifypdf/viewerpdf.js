@@ -532,7 +532,8 @@ class ViewerPdf extends Component {
                           usernameX={this.props.username}
                           userOrigin={this.props.userOrigin}
                           filedecodeAttachX={this.state.filedecodeAttachX}
-                          getTransaction={this.state.getTransaction} />
+                          getTransaction={this.state.getTransaction}
+                          language={this.props.language} />
         :
           <Loader />
         }
