@@ -2,5 +2,16 @@
     "profile.claim": "У вас есть профиль CrossCheck? Начните здесь! ",
     "profile.claim2": "Хотите получить децентрализованный профиль домена? Создайте его здесь!",
     "profile.domainnotfound": "Доменное имя не найдено, попробуйте еще раз!!",
-    "profile.profilenotfound": "Пользователь должен обновить свои данные с помощью редактора профиля."
+    "profile.profilenotfound": "Пользователь должен обновить свои данные с помощью редактора профиля.",
+    "profile.shortdescription": "Short Description",
+    "profile.urlwebsite": "URL Website",
+    "profile.socialnetworks": "Social Networks",
+    "profile.stxaddress": "STX Address",
+    "profile.btcaddress": "BTC Address",
+    "profile.email": "eMail",
+    "profile.phone": "Phone",
+    "profile.poweredby": "Powered by ",
+    "profile.with": " with ",
+    "profile.and": " and ",
+    "profile.download": "Download "
 }

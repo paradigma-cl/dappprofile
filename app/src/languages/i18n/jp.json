@@ -2,5 +2,16 @@
     "profile.claim": "あなたのビジネスプロフィールCrossCheckはありますか？ ここから始める！ ",
     "profile.claim2": "分散型ドメインプロファイルを取得しますか？ ここで作成してください！",
     "profile.domainnotfound": "ドメイン名が見つかりません。もう一度やり直してください。",
-    "profile.profilenotfound": "ユーザーは、プロファイルエディタを使用してデータを更新する必要があります。"
+    "profile.profilenotfound": "ユーザーは、プロファイルエディタを使用してデータを更新する必要があります。",
+    "profile.shortdescription": "Short Description",
+    "profile.urlwebsite": "URL Website",
+    "profile.socialnetworks": "Social Networks",
+    "profile.stxaddress": "STX Address",
+    "profile.btcaddress": "BTC Address",
+    "profile.email": "eMail",
+    "profile.phone": "Phone",
+    "profile.poweredby": "Powered by ",
+    "profile.with": " with ",
+    "profile.and": " and ",
+    "profile.download": "Download "
 }

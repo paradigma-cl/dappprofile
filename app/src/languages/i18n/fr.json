@@ -2,5 +2,16 @@
   "profile.claim": "Avez-vous votre profil d'entreprise CrossCheck? Commencer ici! ",
   "profile.claim2": "Voulez-vous obtenir un profil de domaine décentralisé ? Créez-le ici !",
   "profile.domainnotfound": "Nom de domaine introuvable, réessayez !!",
-  "profile.profilenotfound": "L'utilisateur doit mettre à jour ses données avec l'éditeur de profil."
+  "profile.profilenotfound": "L'utilisateur doit mettre à jour ses données avec l'éditeur de profil.",
+  "profile.shortdescription": "Short Description",
+  "profile.urlwebsite": "URL Website",
+  "profile.socialnetworks": "Social Networks",
+  "profile.stxaddress": "STX Address",
+  "profile.btcaddress": "BTC Address",
+  "profile.email": "eMail",
+  "profile.phone": "Phone",
+  "profile.poweredby": "Powered by ",
+  "profile.with": " with ",
+  "profile.and": " and ",
+  "profile.download": "Download "
 }

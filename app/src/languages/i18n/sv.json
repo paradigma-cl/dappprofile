@@ -2,5 +2,16 @@
     "profile.claim": "Har du din företagsprofil CrossCheck? Börja här! ",
     "profile.claim2": "Vill du få en decentraliserad domänprofil? Skapa den här!",
     "profile.domainnotfound": "Domännamnet hittades inte, försök igen!!",
-    "profile.profilenotfound": "Användaren måste uppdatera sina data med profilredigeraren."
+    "profile.profilenotfound": "Användaren måste uppdatera sina data med profilredigeraren.",
+    "profile.shortdescription": "Short Description",
+    "profile.urlwebsite": "URL Website",
+    "profile.socialnetworks": "Social Networks",
+    "profile.stxaddress": "STX Address",
+    "profile.btcaddress": "BTC Address",
+    "profile.email": "eMail",
+    "profile.phone": "Phone",
+    "profile.poweredby": "Powered by ",
+    "profile.with": " with ",
+    "profile.and": " and ",
+    "profile.download": "Download "
 }

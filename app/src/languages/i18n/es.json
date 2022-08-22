@@ -2,5 +2,16 @@
   "profile.claim": "¿Tienes tú perfil de presentación descentralizado? ¡Empieza acá!",
   "profile.claim2": "¿Quiéres obtener un perfil de dominio descentralizado? ¡Créalo aquí!",
   "profile.domainnotfound": "Dominio no encontrado, intente nuevamente!!",
-  "profile.profilenotfound": "Usuario debe actualizar sus datos con el editor de perfil."
+  "profile.profilenotfound": "Usuario debe actualizar sus datos con el editor de perfil.",
+  "profile.shortdescription": "Descripción Breve",
+  "profile.urlwebsite": "URL Sitio Web",
+  "profile.socialnetworks": "Redes Sociales",
+  "profile.stxaddress": "Dirección STX",
+  "profile.btcaddress": "Dirección BTC",
+  "profile.email": "Correo Electrónico",
+  "profile.phone": "Teléfono",
+  "profile.poweredby": "Desarrollado por ",
+  "profile.with": " con ",
+  "profile.and": " y ",
+  "profile.download": "Descargar "
 }

@@ -2,5 +2,16 @@
     "profile.claim": "Heeft u uw bedrijfsprofiel CrossCheck? Begin hier!  ",
     "profile.claim2": "Wilt u een decentraal domeinprofiel krijgen? Creëer het hier!",
     "profile.domainnotfound": "Domeinnaam niet gevonden, probeer het opnieuw!!",
-    "profile.profilenotfound": "De gebruiker moet zijn gegevens bijwerken met de profieleditor."
+    "profile.profilenotfound": "De gebruiker moet zijn gegevens bijwerken met de profieleditor.",
+    "profile.shortdescription": "Short Description",
+    "profile.urlwebsite": "URL Website",
+    "profile.socialnetworks": "Social Networks",
+    "profile.stxaddress": "STX Address",
+    "profile.btcaddress": "BTC Address",
+    "profile.email": "eMail",
+    "profile.phone": "Phone",
+    "profile.poweredby": "Powered by ",
+    "profile.with": " with ",
+    "profile.and": " and ",
+    "profile.download": "Download "
 }

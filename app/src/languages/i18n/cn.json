@@ -2,5 +2,16 @@
     "profile.claim": "您有您的企業資料 CrossCheck 嗎？ 從這裡開始！",
     "profile.claim2": "您想獲得分散的域配置文件嗎？ 在這裡創建！",
     "profile.domainnotfound": "域名未找到，重試！！",
-    "profile.profilenotfound": "用戶必須使用配置文件編輯器更新他們的數據。"
+    "profile.profilenotfound": "用戶必須使用配置文件編輯器更新他們的數據。",
+    "profile.shortdescription": "Short Description",
+    "profile.urlwebsite": "URL Website",
+    "profile.socialnetworks": "Social Networks",
+    "profile.stxaddress": "STX Address",
+    "profile.btcaddress": "BTC Address",
+    "profile.email": "eMail",
+    "profile.phone": "Phone",
+    "profile.poweredby": "Powered by ",
+    "profile.with": " with ",
+    "profile.and": " and ",
+    "profile.download": "Download "
 }
