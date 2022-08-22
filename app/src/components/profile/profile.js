@@ -527,7 +527,7 @@ class Profile extends React.Component {
                                 <Col lg="10">
                                   <Table size="sm" className="text-center" responsive borderless>
                                       <tbody>
-                                        <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>Short Description</td></tr>
+                                        <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}><FormattedMessage id="profile.shortdescription" /></td></tr>
                                         <tr>
                                           <td style={{ width: "90%" }}>
                                               <FormTextarea
@@ -551,7 +551,7 @@ class Profile extends React.Component {
                                   <Col lg="8">
                                     <Table size="sm" className="text-center" responsive borderless>
                                         <tbody>
-                                          <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>URL Website</td></tr>
+                                          <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}><FormattedMessage id="profile.urlwebsite" /></td></tr>
                                           <tr><td style={{fontSize:24, color: this.state.colorEmail}}><a href={this.state.jsonBlockstack4.web} target="_blank" rel="noopener noreferrer">{this.state.jsonBlockstack4.web}</a></td></tr>
                                         </tbody>
                                     </Table>
@@ -566,7 +566,7 @@ class Profile extends React.Component {
                                 <Col lg="8">
                                   <Table size="sm" className="text-center" responsive borderless>
                                       <tbody>
-                                        <tr><td className="text-center" style={{fontSize:12, color: this.state.colorLabelEmail}}>Social Networks</td></tr>
+                                        <tr><td className="text-center" style={{fontSize:12, color: this.state.colorLabelEmail}}><FormattedMessage id="profile.socialnetworks" /></td></tr>
                                       </tbody>
                                   </Table>
                                   <Table size="sm" className="text-center" responsive borderless>
@@ -605,7 +605,7 @@ class Profile extends React.Component {
                                     <tbody>
                                       {this.state.bStxScope ?
                                          <>
-                                          <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>STX Address</td></tr>
+                                          <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}><FormattedMessage id="profile.stxaddress" /></td></tr>
                                           <tr><td style={{fontSize:24, color: this.state.colorStxSddress}}><strong>{this.state.stxAddress2X}</strong></td></tr>
                                         </>
                                       :
@@ -613,7 +613,7 @@ class Profile extends React.Component {
                                       }
                                       {this.state.bBtcScope ?
                                          <>
-                                          <tr><td style={{fontSize:12, color: this.state.colorLabelBtcSddress}}>BTC Address</td></tr>
+                                          <tr><td style={{fontSize:12, color: this.state.colorLabelBtcSddress}}><FormattedMessage id="profile.btcaddress" /></td></tr>
                                           <tr><td style={{fontSize:24, color: this.state.colorBtcSddress}}><strong>{this.state.jsonBlockstack4.account[2].identifier}</strong></td></tr>
                                         </>
                                       :
@@ -621,7 +621,7 @@ class Profile extends React.Component {
                                       }
                                       {this.state.bEmailScope ?
                                         <>
-                                          <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}>eMail</td></tr>
+                                          <tr><td style={{fontSize:12, color: this.state.colorLabelEmail}}><FormattedMessage id="profile.email" /></td></tr>
                                           <tr><td style={{fontSize:24, color: this.state.colorEmail}}><strong>{this.state.jsonBlockstack4.account[0].identifier}</strong></td></tr>
                                         </>
                                       :
@@ -629,7 +629,7 @@ class Profile extends React.Component {
                                       }
                                       {this.state.bSmsScope ?
                                          <>
-                                           <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}>Phone</td></tr>
+                                           <tr><td style={{fontSize:12, color: this.state.colorLabelStxSddress}}><FormattedMessage id="profile.phone" /></td></tr>
                                            <tr><td style={{fontSize:24, color: this.state.colorPhone}}><strong>{`${this.state.jsonBlockstack4.account[1].smsPrefix}${this.state.jsonBlockstack4.account[1].identifier}`}</strong></td></tr>
                                          </>
                                       :
@@ -664,7 +664,7 @@ class Profile extends React.Component {
                                         <Row>
                                           <Col lg="12">
                                             <div style={{ textAlign:"center" }}>
-                                              <Button outline pill theme="primary" onClick={e=>this.handleQRCodeBeforeVcard(e,'download')}>{`Download Vcard = ${nameId}`}</Button>
+                                              <Button outline pill theme="primary" onClick={e=>this.handleQRCodeBeforeVcard(e,'download')}><FormattedMessage id="profile.download" />{`Vcard = ${nameId}`}</Button>
                                             </div>
                                           </Col>
                                         </Row>
@@ -691,7 +691,9 @@ class Profile extends React.Component {
                               <Row>
                                 <Col lg="2"></Col>
                                 <Col lg="8">
-                                   <div className="text-center" style={{fontSize:22, color: this.state.colorClaim2}}><a href="https://domains.paradigma.global/" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim2" /></a></div>
+                                   <div className="text-center" style={{fontSize:22, color: this.state.colorClaim2}}>
+                                      <a href="https://domains.paradigma.global/" target="_blank" rel="noopener noreferrer"><FormattedMessage id="profile.claim2" /></a>
+                                   </div>
                                 </Col>
                                 <Col lg="2"></Col>
                               </Row>
@@ -707,7 +709,9 @@ class Profile extends React.Component {
                                     }
                                 </Col>
                                 <Col lg="8">
-                                   <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+                                   <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>
+                                       <FormattedMessage id="profile.poweredby" /><a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a><FormattedMessage id="profile.with" /><a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a><FormattedMessage id="profile.and" /><a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology
+                                   </div>
                                 </Col>
                                 <Col lg="2">
                                   <FormCheckbox
@@ -765,7 +769,9 @@ class Profile extends React.Component {
                           <Row>
                             <Col lg="2"></Col>
                             <Col lg="8">
-                               <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+                               <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>
+                                   <FormattedMessage id="profile.poweredby" /><a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a><FormattedMessage id="profile.with" /><a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a><FormattedMessage id="profile.and" /><a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology
+                               </div>
                             </Col>
                             <Col lg="2"></Col>
                           </Row>
@@ -821,7 +827,9 @@ class Profile extends React.Component {
                         <Row>
                           <Col lg="2"></Col>
                           <Col lg="8">
-                             <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>Powered by <a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a> with <a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a> and <a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology </div>
+                            <div className="text-center" style={{fontSize:13, color: this.state.colorPowered}}>
+                                <FormattedMessage id="profile.poweredby" /><a href="https://paradigma.global" target="_blank" rel="noopener noreferrer">Paradigma</a><FormattedMessage id="profile.with" /><a href="https://bitcoin.org/" target="_blank" rel="noopener noreferrer">Bitcoin</a><FormattedMessage id="profile.and" /><a href="https://stacks.co" target="_blank" rel="noopener noreferrer">Stacks</a> Blockchain Technology
+                            </div>
                           </Col>
                           <Col lg="2"></Col>
                         </Row>
