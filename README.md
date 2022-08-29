@@ -8,6 +8,7 @@ Development work by Paradigma SpA co-funded by the Stacks Foundation (https://gr
 
 As described in the Stacks documentation (https://docs.stacks.co/docs/build-apps), Apps built with the Stacks blockchain (https://stacks.co) give users control over their digital identities, assets, and data.
 Unlike most cloud-based apps, they are "decentralized" since they don't depend on any centralized platform, server, or database to function. Rather, they use the Stacks blockchain to authenticate users and facilitate read and write requests for them without any single point of failure or trust.
+The Stacks blockchain addresses performance problems using a layered approach. The base layer consists of the Stacks blockchain and the Blockchain Naming System (BNS). The blockchain governs ownership of identities in the Stacks network. Identities can be names such as domain names, usernames, or application names.
 
 Stacks provides three main functions for building apps:
 
@@ -17,7 +18,7 @@ Stacks provides three main functions for building apps:
 
 All three of these integrations can be used together to create powerful new user experiences that rival or exceed those of traditional apps—all while protecting your users' digital rights.
 
-Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  
+Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  Each user has access and/or shares its own private data through the different decentralized applications that at the same time they could interact between them exchanging information.
  
 ![Figure 1 Renaissance of the App](/dapp_renaissance_of_the_app.png)
 
@@ -46,6 +47,7 @@ This strategy is ratified by a recent proposal in using a new DID method in conj
 Other future strategies, could be specifying that a DID correspond to a specific Blockchain ecosystem, like Stacks.
 
 #### a.1 The App Profile
+In this case, we would like to define a profile to identify the web application that has been developed.  This identification is useful for 
 The app is identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.
 
 The description for a App Profile document is done using a JSON web token based on the WebApplication Schema object (https://schema.org/WebApplication).
