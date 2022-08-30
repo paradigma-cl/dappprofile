@@ -48,13 +48,13 @@ This strategy is ratified by a recent proposal in using a new DID method in conj
 Other future strategies, could be specifying that a DID correspond to a specific Blockchain ecosystem, like Stacks.
 
 #### a.1 The App Profile 
-Each App (web application) should have a verified identity in order to safely use it and be trustworthy of interaction between other applications.
+Each App (web application) should have a verified identity in order to safely reference it and be trustworthy of interaction between other applications.
 
-An app can be identified both by the Internet domain for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.
+An app can be identified both by the Internet domain (DNS) for example 'XCK.app' and the Stacks DID 'XCK.app'  In case, it is a web application, it could be accessed as https://xck.app having both definitions.
 
 The description for a App Profile document is done using a JSON web token based on the WebApplication Schema object (https://schema.org/WebApplication).
 
-Additionally, this document has to include the did-method-web.  The example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
+Additionally, this App Profile document has to include the did-method-web.  The example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
 
 It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app?profile
 
@@ -75,17 +75,18 @@ For example, for the domain name 'xck.app', the 'did.json' will be available und
 [Example of the 'did.json' file for 'XCK.app'](/appprofile/did.json)
 
 ### b.	Expanding the Internet Domain Names to the users Decentralized Identifiers
-In this context, the DIDs are URIs that associate a DID subject as a user of the application with a DID document allowing trustable interactions associated with that subject.
+For the users of each App (web application), the App could provide a verified user identity in order to safely reference across other applications.
+
+In this context, the DIDs are URIs that associate a DID subject as an user of the application with a DID document allowing trustable interactions associated with that subject.
 
 #### b.1 The App User's Profile document
-The Stacks Blockchain Name System has the possibility to create subdomain names under a define domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
+The Stacks Blockchain Name System has the possibility to create subdomain names under a defined decentralized domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
 
-
-In this case, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app?profile
+In the example used here, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app?profile
 
 The description for a App User Profile document is done using a JSON web token based on the Person Schema object (https://schema.org/Person).
 
-Also, this document has to include the did-method-web for the app user.  The example is represented as 'did:web:support.xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app user profile.
+Also, this document has to include the did-method-web for the app user.  For the user support.xck.app as an example, it is represented as 'did:web:support.xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app user profile.
 
 In this case, the application should also return a JSON web token using the Person Schema object.
 
