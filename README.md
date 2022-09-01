@@ -118,6 +118,14 @@ This is accomplished using virtual servers.
 
 ## 3.	Procedure to access the public app's data.
 
-In the Stack App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user wants to share.  This information is stored in a decentralizaed way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
+In the Stacks App Architecture each user identified by a Stacks Account, with or without a domain or subdomain name has an Authentication ID and private Data storage.  The App User Profile service opens the opportunity to share publicly information that the user wants to share.  
+In order to have a more personalized Web User App profile, the user could display an Avatar image, and a background image to be displayed as part of the profile.  Additionally, to theme of colors of the web page.
+To extend the usefulness of the UserApp Profile, it was also included the capacity to download a Vcard file with the contact data of the User App Profile, or a QR image for the same functionality.
+Example of the web display of the App User Profile in the case of support.xck.app
+![Figure 2 Example of App User Profile](/Profile_Crosscheck_support_xck_app.png)
+
+This App User Profile can be display using the did:web:support.xck.app direclty as https://support.xck.app support.xck.app is a registered DNS name and a registered BNS name.
+
+This information is stored in a decentralized way, so the following application is capable to retrieve the profile from the actual data storage associated to the user.
 
 [Example of the application that displays the app user profile in a public form](/app)
