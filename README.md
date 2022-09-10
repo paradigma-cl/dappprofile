@@ -27,7 +27,7 @@ The following document is a proposal to establish a standard verifiable decentra
 
 ## 1.	Definition of a publicly accessible app’s profile and app user’s profile
 
-The integration of authentication, transaction signing, and data storage presents an opportunity to define the profiles for the application itself, each of its users, depending the application to identify its subjects, in a decentralized way using the Internet.  
+The integration of authentication, transaction signing, and data storage presents an opportunity to define the profiles for the application itself, and each of its users, depending on the application to identify its subjects, in a decentralized way using the Internet.  
 
 The W3C (https://www.w3.org) recommends Decentralized identifiers (DIDs), as a new type of identifier that enables verifiable, decentralized digital identity. A DID identifies any subject (e.g., a person, organization, thing, data model, abstract entity, etc.) that the controller of the DID decides to identify. In contrast to typical, federated identifiers, DIDs have been designed so that they may be decoupled from centralized registries, identity providers, and certificate authorities. DIDs are URIs that associate a DID subject with a DID document allowing trustable interactions associated with that subject. Each DID document can express cryptographic material, verification methods, or services, which provide a set of mechanisms enabling a DID controller to prove control of the DID.  
 
