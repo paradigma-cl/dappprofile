@@ -19,7 +19,7 @@ Stacks provides three main functions for building apps:
 
 All three of these integrations can be used together to create powerful new user experiences that rival or exceed those of traditional apps—all while protecting your users' digital rights.
 
-Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users, can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  Each user has access and/or shares with other users its own private data through the decentralized application. At another level, the different applications could interact among them exchanging information.  In order to use these capabilities, a set of standard verifiable digital identities should be used integrated to the web to have a secure and private interaction.
+Decentralized Apps (Dapp’s) is the New App that integrates these main functions, authentication, transaction signing, and data storage.  All users can run their applications under their own private decentralized space as shown in figure 1 Renaissance of the App.  Each user has access to and/or shares with other users its own private data through the decentralized application. At another level, the different applications could interact among them exchanging information.  In order to use these capabilities, a set of standard verifiable digital identities should be used integrated into the web to have a secure and private interaction.
  
 ![Figure 1 Renaissance of the App](/dapp_renaissance_of_the_app.png)
 
