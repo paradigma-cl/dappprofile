@@ -36,14 +36,17 @@ class ViewerPdf extends Component {
           networkUrlX: '',
           trimmedDataURL: null,
           jsonBlockstackFormPago: [],
-          originMoney: 'USD',
+          originMoney: 'USD - US Dollar',
+          symbolcurrency: 'USD',
           jsonHeadPaymentForm: [],
-          cryptoCurrency: null,
+          cryptoCurrency: 'STX',
           saldodocumento: null,
+          totaldocumento: '',
           contentStateRaw: null,
           filedecodeAttachX: {},
           fileAttachX: {},
           getTransaction: '',
+          fullRead: false,
         }
     }
 
@@ -52,11 +55,12 @@ class ViewerPdf extends Component {
       Promise.all([
                    this.getAgreement(networkUrlX),
                    this.goSignListNames(this.props.typeContract,this.props.numberContract,this.props.userRole,this.props.userOrigin,networkUrlX),
+                   this.getHeadPaymentFormsNames(networkUrlX),
                    this.getDetailPaymentFormsNames(networkUrlX),
                    this.getUploadedDetailNames(networkUrlX),
                    this.getTransactionRegisterNames(networkUrlX)
                  ])
-        .then((resolve) =>{},(reject) =>{})
+        .then((resolve) =>{this.setState({fullRead: true})},(reject) =>{this.setState({fullRead: true})})
     }
 
     //-----------------------------------------------------------------------
@@ -86,6 +90,11 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${typeContract}_${numberContract}_usergroup.json`
                   axios.get(getFile)
                     .then(fileContents => {
+
+                      //console.log('goSignListNames')
+                      //console.log('then')
+                      //console.log(fileContents)
+
                       if(fileContents) {
                         const jsonBlockstack1 = fileContents.data
                         this.setState({jsonBlockstackY: jsonBlockstack1})
@@ -96,6 +105,11 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+
+                      //console.log('goSignListNames')
+                      //console.log('catch 1')
+                      console.log(error)
+
                       //----------------------------------------------------------------------------------
                       this.goSignListRemotoNames(typeContract,numberContract,jsonBlockstack1,networkUrlX)
                       //----------------------------------------------------------------------------------
@@ -103,11 +117,15 @@ class ViewerPdf extends Component {
                     });
                })
                .catch(error => {
+                 //console.log('goSignListNames')
+                 //console.log('catch 2')
                  console.log(error)
                  reject1()
                });
             })
             .catch(error => {
+              //console.log('goSignListNames')
+              //console.log('catch 3')
               console.log(error)
               reject1()
             });
@@ -143,6 +161,9 @@ class ViewerPdf extends Component {
                     new Promise ((resolve3, reject3) =>{
                       axios.get(getFile)
                         .then(fileContents => {
+                          //console.log('goSignListRemotoNames')
+                          //console.log('then')
+                          //console.log(fileContents)
                           if(fileContents) {
                                const jsonBlockstack1 = fileContents.data
                                jsonBlockstack4d = jsonBlockstack1
@@ -157,6 +178,8 @@ class ViewerPdf extends Component {
                           }
                         })
                         .catch(error => {
+                          //console.log('goSignListRemotoNames')
+                          //console.log('catch 1')
                           console.log(error)
                           //-----------------------------------------------------------------------------
                           this.getSignatureRemoto(todoUserRemote.id,jsonBlockstack4c,keyUserRemote,networkUrlX)
@@ -165,10 +188,14 @@ class ViewerPdf extends Component {
                     });
                  })
                  .catch(error => {
+                   //console.log('goSignListRemotoNames')
+                   //console.log('catch 2')
                    console.log(error)
                  });
               })
               .catch(error => {
+                //console.log('goSignListRemotoNames')
+                //console.log('catch 3')
                 console.log(error)
             });
             if (keyUserRemote === largo - 1){
@@ -205,7 +232,10 @@ class ViewerPdf extends Component {
                     new Promise ((resolve3, reject3) =>{
                       axios.get(getFile)
                         .then(fileContents => {
-                        if(fileContents) {
+                          //console.log('getSignatureRemoto')
+                          //console.log('then')
+                          //console.log(fileContents)
+                          if(fileContents) {
                              if (fileContents.data !== '[]' && fileContents.data !== ''){
                                const jsonBlockstack1 = fileContents.data
                                const jsonBlockstack2 = JSON.parse(jsonBlockstack1)
@@ -225,17 +255,23 @@ class ViewerPdf extends Component {
                           }
                         })
                         .catch(error => {
+                          //console.log('getSignatureRemoto')
+                          //console.log('catch 1')
                           console.log(error)
                           resolve5()
                         });
                     });
                  })
                  .catch(error => {
+                   //console.log('getSignatureRemoto')
+                   //console.log('catch 2')
                    console.log(error)
                    reject5()
                  });
               })
               .catch(error => {
+                //console.log('getSignatureRemoto')
+                //console.log('catch 3')
                 console.log(error)
                 reject5()
             });
@@ -267,27 +303,45 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_detail_payment_form.json`
                   axios.get(getFile)
                     .then((fileContents) => {
+                      //console.log('getDetailPaymentFormsNames')
+                      //console.log('then')
+                      //console.log(fileContents)
+                      let jsonBlockstack1 = []
                       if(fileContents) {
-                        const jsonBlockstack1 = fileContents.data
-                        this.setState({jsonBlockstackFormPago: jsonBlockstack1})
-                        //-----------------------------------------------------------------------------
-                        this.getHeadPaymentFormsNames(networkUrlX)
-                        //-----------------------------------------------------------------------------
+                        jsonBlockstack1 = fileContents.data
+                        if (Array.isArray(jsonBlockstack1)){
+                            this.setState({jsonBlockstackFormPago: jsonBlockstack1})
+                        }else{
+                          let jsonBlockstack2 = fileContents.data
+                          let jsonBlockstack3 = jsonBlockstack2.replace(/\\/g,"")
+                          let jsonBlockstack4 = jsonBlockstack3
+                          if (jsonBlockstack3.substring(0,1)==='"' || jsonBlockstack3.substring(0,1)==='[]') {
+                             jsonBlockstack4 = jsonBlockstack3.substring(1,jsonBlockstack3.length - 1);
+                          }
+                          jsonBlockstack1 = JSON.parse(jsonBlockstack4)
+                          this.setState({jsonBlockstackFormPago: jsonBlockstack1})
+                        }
                       } else {
                         resolve6();
                       }
                     })
                     .catch(error => {
+                      //console.log('getDetailPaymentFormsNames')
+                      //console.log('catch 1')
                       console.log(error)
                       reject6()
                     });
                })
              .catch(error => {
+               //console.log('getDetailPaymentFormsNames')
+               //console.log('catch 2')
                console.log(error)
                reject6()
              });
           })
           .catch(error => {
+            //console.log('getDetailPaymentFormsNames')
+            //console.log('catch 3')
             console.log(error)
             reject6()
           });
@@ -319,26 +373,35 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_head_payment_form.json`
                   axios.get(getFile)
                     .then((fileContents) => {
+                      //console.log('getHeadPaymentFormsNames')
+                      //console.log('then')
+                      //console.log(fileContents)
                       if(fileContents) {
                         const jsonBlockstack1 = JSON.parse(fileContents.data)
                         this.setState({jsonHeadPaymentForm:jsonBlockstack1});
-                        this.setState({cryptoCurrency:jsonBlockstack1[0].symbolcryptocurrency, originMoney:jsonBlockstack1[0].symbolcurrency, saldodocumento: parseFloat(jsonBlockstack1[0].amount)})
+                        this.setState({cryptoCurrency:jsonBlockstack1[0].symbolcryptocurrency, originMoney:jsonBlockstack1[0].originMoney,  symbolcurrency:jsonBlockstack1[0].symbolcurrency, saldodocumento: parseFloat(jsonBlockstack1[0].amount), totaldocumento: jsonBlockstack1[0].amount})
                         resolve7();
                       } else {
                         resolve7();
                       }
                     })
                     .catch(error => {
+                      //console.log('getHeadPaymentFormsNames')
+                      //console.log('catch 1')
                       console.log(error)
                       reject7();
                     });
                })
              .catch(error => {
+               //console.log('getHeadPaymentFormsNames')
+               //console.log('catch 2')
                console.log(error)
                reject7()
              });
           })
           .catch(error => {
+            //console.log('getHeadPaymentFormsNames')
+            //console.log('catch 3')
             console.log(error)
             reject7()
           });
@@ -370,6 +433,9 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_blankdetail.json`
                   axios.get(getFile)
                     .then((fileContents) => {
+                      //console.log('getAgreement')
+                      //console.log('then')
+                      //console.log(fileContents)
                       if(fileContents) {
                         const fileContentsString = JSON.stringify(fileContents.data)
                         const contentState = convertFromRaw(JSON.parse(fileContentsString))
@@ -380,16 +446,22 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      //console.log('getAgreement')
+                      //console.log('catch 1')
                       console.log(error)
                       reject8();
                     });
                })
              .catch(error => {
+               //console.log('getAgreement')
+               //console.log('catch 2')
                console.log(error)
                reject8()
              });
           })
           .catch(error => {
+            //console.log('getAgreement')
+            //console.log('catch 3')
             console.log(error)
             reject8()
           });
@@ -421,6 +493,9 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}_uploadeddetail.json`
                   axios.get(getFile)
                     .then((fileContents) => {
+                      //console.log('getUploadedDetailNames')
+                      //console.log('then')
+                      //console.log(fileContents)
                       if(fileContents) {
                         const jsonBlockstack1 = fileContents.data.replace(/\\/g,"")
                         let jsonBlockstack3 = jsonBlockstack1
@@ -437,16 +512,22 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      //console.log('getUploadedDetailNames')
+                      //console.log('catch 1')
                       console.log(error)
                       reject9()
                     });
                })
              .catch(error => {
+               //console.log('getUploadedDetailNames')
+               //console.log('catch 2')
                console.log(error)
                reject9()
              });
           })
           .catch(error => {
+            //console.log('getUploadedDetailNames')
+            //console.log('catch 3')
             console.log(error)
             reject9()
           });
@@ -479,6 +560,9 @@ class ViewerPdf extends Component {
                   const getFile = storage + `${this.props.typeContract}_${this.props.numberContract}.json`
                   axios.get(getFile)
                     .then((fileContents) => {
+                      //console.log('getTransactionRegisterNames')
+                      //console.log('then')
+                      //console.log(fileContents)
                       if(fileContents) {
                         const jsonBlockstack1 = JSON.parse(fileContents.data)
                         const txId = jsonBlockstack1.registerTxId
@@ -496,16 +580,22 @@ class ViewerPdf extends Component {
                       }
                     })
                     .catch(error => {
+                      //console.log('getTransactionRegisterNames')
+                      //console.log('catch 1')
                       console.log(error)
                       reject10();
                     });
                })
              .catch(error => {
+               //console.log('getTransactionRegisterNames')
+               //console.log('catch 2')
                console.log(error)
                reject10()
              });
           })
           .catch(error => {
+            //console.log('getTransactionRegisterNames')
+            //console.log('catch 3')
             console.log(error)
             reject10()
           });
@@ -515,9 +605,12 @@ class ViewerPdf extends Component {
 
     render() {
       let jsonBlockstack5X = false
-      if (this.state.jsonBlockstackY !== null){
-        jsonBlockstack5X = true
+      if (this.state.fullRead === true){
+        if (this.state.jsonBlockstackY !== null){
+          jsonBlockstack5X = true
+        }
       }
+
       return (
         <>
         {jsonBlockstack5X ?
@@ -528,7 +621,10 @@ class ViewerPdf extends Component {
                           description={this.props.description}
                           trimmedDataURL={this.state.trimmedDataURL}
                           jsonBlockstackFormPago={this.state.jsonBlockstackFormPago}
+                          totaldocumento={this.state.totaldocumento}
                           originMoney={this.state.originMoney}
+                          cryptoCurrency={this.state.cryptoCurrency}
+                          symbolcurrency={this.state.symbolcurrency}
                           usernameX={this.props.username}
                           userOrigin={this.props.userOrigin}
                           filedecodeAttachX={this.state.filedecodeAttachX}

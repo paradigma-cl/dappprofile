@@ -3,6 +3,11 @@ import {Container, Card, Row, Col } from "shards-react";
 import { Table } from 'reactstrap';
 import MyViewerPdf from './myviewerpdf';
 import { FormattedMessage } from 'react-intl';
+import grey from "@material-ui/core/colors/grey";
+import Home from '@material-ui/icons/Home';
+import Facebook from '@material-ui/icons/Facebook';
+import Twitter from '@material-ui/icons/Twitter';
+import YouTube from '@material-ui/icons/YouTube';
 
 class MyDocument extends Component {
 
@@ -33,6 +38,9 @@ class MyDocument extends Component {
       let totalsX = 'Totals'
       let registrationX = 'Blockchain Registration'
       let suscritoX = 'Document signed by digital signature'
+      let paymentForm1X = 'The total amount of this agreement is'
+      let paymentForm2X = 'and will be paid in'
+      let paymentForm3X = 'at the exchange rate at the time of payment'
       if (this.props.language === 'en'){ paymentFormX = 'Payment Method'; signatoriesX = 'Signatories'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Agreement Document"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
       if (this.props.language === 'fr'){ paymentFormX = 'Mode de Paiement'; signatoriesX = 'Signataires'; signatureX = 'Signature'; nameX = 'Name'; titleX = "Document d'accord"; itemX = "Item"; conceptX = "Concept"; estimatedDateX = "Estimated Date"; percentX = "Percent"; amountX = "Amount"; docVerifyX = 'Agreement Document Verification'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Subject'}
       if (this.props.language === 'es'){ paymentFormX = 'Forma de Pago'; signatoriesX = 'Firmantes'; signatureX = 'Firma'; nameX = 'Nombre'; titleX = "Documento de Acuerdo"; itemX = "Item"; conceptX = "Concepto"; estimatedDateX = "Fecha Estimada"; percentX = "Porcentaje"; amountX = "Monto"; docVerifyX = 'Verificación Documento de Acuerdo'; docNumberX = 'Crosscheck Id'; docAsuntoX = 'Asunto'}
@@ -69,6 +77,17 @@ class MyDocument extends Component {
       if (this.props.language === 'de'){ suscritoX = 'Dokument mit digitaler Signatur signiert'; }
       if (this.props.language === 'it'){ suscritoX = 'Documento firmato con firma digitale'; }
 
+      if (this.props.language === 'en'){ paymentForm1X = "The total amount of this agreement is"; paymentForm2X = "and will be paid in"; paymentForm3X = "at the exchange rate at the time of payment"}
+      if (this.props.language === 'fr'){ paymentForm1X = "Le montant total de cet accord est"; paymentForm2X = "aet sera payé en"; paymentForm3X = "au taux de change au moment du paiement"}
+      if (this.props.language === 'es'){ paymentForm1X = "El monto total de este acuerdo es de"; paymentForm2X = "y será pagado en"; paymentForm3X = "al tipo de cambio del momento del pago"}
+      if (this.props.language === 'pt'){ paymentForm1X = "O valor total deste contrato é"; paymentForm2X = "e será pago em"; paymentForm3X = "à taxa de câmbio no momento do pagamento"}
+      if (this.props.language === 'sv'){ paymentForm1X = "Det totala beloppet för detta avtal är"; paymentForm2X = "och kommer att betalas in"; paymentForm3X = "till växelkursen vid betalningstillfällett"}
+      if (this.props.language === 'nl'){ paymentForm1X = "Het totale bedrag van deze overeenkomst is"; paymentForm2X = "en wordt uitbetaald"; paymentForm3X = "tegen de wisselkoers op het moment van betaling"}
+      if (this.props.language === 'ru'){ paymentForm1X = "Общая сумма этого договора составляет"; paymentForm2X = "и будет оплачен в"; paymentForm3X = "по курсу на момент оплаты"}
+      if (this.props.language === 'jp'){ paymentForm1X = "この契約の総額は、"; paymentForm2X = "で支払われます"; paymentForm3X = "支払い時の為替レートで"}
+      if (this.props.language === 'cn'){ paymentForm1X = "本協議總金額為"; paymentForm2X = "並將支付"; paymentForm3X = "按付款時的匯率"}
+      if (this.props.language === 'de'){ paymentForm1X = "Der Gesamtbetrag dieser Vereinbarung beträgt"; paymentForm2X = "und wird einbezahlt"; paymentForm3X = "zum Wechselkurs zum Zeitpunkt der Zahlung"}
+      if (this.props.language === 'it'){ paymentForm1X = "L'importo totale di questo accordo è"; paymentForm2X = "e verrà pagato"; paymentForm3X = "al tasso di cambio al momento del pagamento"}
 
       let textX = {}
       let textX2 = []
@@ -78,7 +97,13 @@ class MyDocument extends Component {
       }
 
       const firmantesX = this.props.jsonBlockstackY
-      const formapagoX = this.props.jsonBlockstackFormPago
+
+      let displayFormaPagoX = false
+      let formapagoX = []
+      if (this.props.jsonBlockstackFormPago.length > 0){
+         formapagoX = this.props.jsonBlockstackFormPago
+         displayFormaPagoX = true
+      }
 
       let typeContractBlank = false
       if (this.props.typeContract === 'blank'){
@@ -92,7 +117,6 @@ class MyDocument extends Component {
       if (this.props.language === 'es'){
          languageSpanishX = true
       }
-
       return (
         <Container fluid className="main-content-container px-4" >
            <Row>&nbsp;</Row>
@@ -135,7 +159,7 @@ class MyDocument extends Component {
                       <Col md="12">
                           <Card small text-center>
                             <Col md="12">
-                                <MyViewerPdf filedecodeAttachX={filedecodeAttachX} scale={scale} />
+                                <MyViewerPdf filedecodeAttachX={filedecodeAttachX} scale={scale} language={this.props.language} />
                             </Col>
                             <br></br>
                           </Card>
@@ -147,33 +171,42 @@ class MyDocument extends Component {
              </Col>
            </Row>
            <Row>&nbsp;</Row>
-           <Row>
-             <label htmlFor="" style={{fontSize:13, fontWeight: 'bold'}}>{paymentFormX}</label>
-             <Table size="sm"  style={{fontSize:13}} className="text-left" borderless responsive hover striped>
-               <thead>
-                   <tr>
-                     <td>{itemX}</td>
-                     <td>{conceptX}</td>
-                     <td>{estimatedDateX}</td>
-                     <td>{percentX}</td>
-                     <td>{amountX}</td>
-                   </tr>
-               </thead>
-               <tbody>
-                 {formapagoX.map((todo, i) => {
-                   return (
-                       <tr key={i} style={ this.props.colorDark ? { color:'white', fontSize:11} : {color:'black', fontSize:12}}>
-                           <td>{++i}</td>
-                           <td>{todo.concept}</td>
-                           <td>{todo.estimateddate}</td>
-                           <td>{`${todo.percent} %`}</td>
-                           <td>{`${todo.amount} ${this.props.originMoney}`}</td>
+           {displayFormaPagoX ?
+             <>
+               <Row>
+                 <label htmlFor="" style={{fontSize:13, fontWeight: 'bold'}}>{paymentFormX}</label>
+                 <Table size="sm"  style={{fontSize:13}} className="text-left" borderless responsive hover striped>
+                   <thead>
+                       <tr>
+                         <td>{itemX}</td>
+                         <td>{conceptX}</td>
+                         <td>{estimatedDateX}</td>
+                         <td>{percentX}</td>
+                         <td>{amountX}</td>
                        </tr>
-                 )})}
-               </tbody>
-             </Table>
-           </Row>
-           <Row>&nbsp;</Row>
+                   </thead>
+                   <tbody>
+                     {formapagoX.map((todo, i) => {
+                       return (
+                           <tr key={i} style={ this.props.colorDark ? { color:'white', fontSize:11} : {color:'black', fontSize:12}}>
+                               <td>{++i}</td>
+                               <td>{todo.concept}</td>
+                               <td>{todo.estimateddate}</td>
+                               <td>{`${todo.percent} %`}</td>
+                               <td>{`${todo.amount} ${this.props.symbolcurrency}`}</td>
+                           </tr>
+                     )})}
+                   </tbody>
+                 </Table>
+               </Row>
+               <Row>
+                 <div>{`${paymentForm1X} ${this.props.totaldocumento} ${this.props.symbolcurrency} ${paymentForm2X} ${this.props.cryptoCurrency} ${paymentForm3X}`}</div>
+               </Row>
+               <Row>&nbsp;</Row>
+             </>
+           :
+             null
+           }
            <Row>
              <label htmlFor="" style={{fontSize:13, fontWeight: 'bold'}}>{signatoriesX}</label>
              <Table size="sm"  style={{fontSize:13}} className="text-left" borderless responsive hover striped>
@@ -181,6 +214,7 @@ class MyDocument extends Component {
                    <tr>
                      <td>{nameX}</td>
                      <td>Id</td>
+                     <td>{withdateX}</td>
                      <td>{signatureX}</td>
                      <td></td>
                    </tr>
@@ -192,6 +226,7 @@ class MyDocument extends Component {
                          <tr key={i} style={ this.props.colorDark ? { color:'white', fontSize:11} : {color:'black', fontSize:12}}>
                              <td>{todo.name}</td>
                              <td>{todo.id}</td>
+                             <td>{todo.signaturedatetime}</td>
                              <td><img src={todo.signpad} weight="50" height="70" alt=""/></td>
                              <td>{todo.signature}</td>
                          </tr>
@@ -249,7 +284,22 @@ class MyDocument extends Component {
              <Col lg="2"></Col>
            </Row>
            <Row>&nbsp;</Row>
-           <Row>&nbsp;</Row>
+           <Row>
+             <Col lg="4"></Col>
+             <Col lg="4">
+               <Table size="sm" borderless responsive className="text-center">
+                  <tbody>
+                    <tr>
+                      <td style={{ width: "25%" }}><a href={`https://${this.props.usernameX}`} target="_blank" rel="noopener noreferrer"><Home style={{ color: "grey" }} /></a></td>
+                      <td style={{ width: "25%" }}><a href={`https://www.facebook.com/checkParadigma?_rdc=1&_rdr`} target="_blank" rel="noopener noreferrer"><Facebook style={{ color: "grey" }} /></a></td>
+                      <td style={{ width: "25%" }}><a href={`https://twitter.com/CheckParadigma`} target="_blank" rel="noopener noreferrer"><Twitter style={{ color: "grey" }} /></a></td>
+                      <td style={{ width: "25%" }}><a href={`https://www.youtube.com/channel/UCmb9qMswCHruc3IpNG-Pjcw/videos`} target="_blank" rel="noopener noreferrer"><YouTube style={{ color: "grey" }} /></a></td>
+                    </tr>
+                  </tbody>
+              </Table>
+             </Col>
+             <Col lg="4"></Col>
+           </Row>
         </Container>
       )
     }

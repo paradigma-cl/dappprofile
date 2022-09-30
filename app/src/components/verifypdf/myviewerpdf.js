@@ -56,7 +56,7 @@ class MyViewerPdf extends Component {
   }
 
   renderPagination() {
-    let contractPageX = ''
+    let contractPageX = `${this.state.page} of ${this.state.pages}`
     if (this.props.language === 'en'){contractPageX = `${this.state.page} of ${this.state.pages}`}
     if (this.props.language === 'fr'){contractPageX = `${this.state.page} de ${this.state.pages}`}
     if (this.props.language === 'es'){contractPageX = `${this.state.page} de ${this.state.pages}`}
@@ -79,7 +79,7 @@ class MyViewerPdf extends Component {
                     <tr>
                       <td><strong style={{cursor: 'pointer'}} onClick={e=>this.handleInitial(e)}><img src="images/initial.png" weight="15" height="15" alt=""/></strong></td>
                       <td><strong style={{cursor: 'pointer'}} onClick={e=>this.handlePrevious(e)}><img src="images/previous.png" weight="20" height="20" alt=""/></strong></td>
-                      <td> &nbsp;&nbsp;{contractPageX}&nbsp;&nbsp;</td>
+                      <td style={{color:"#808080"}}> &nbsp;&nbsp;{contractPageX}&nbsp;&nbsp;</td>
                       <td><strong style={{cursor: 'pointer'}} onClick={e=>this.handleNext(e)}><img src="images/next.png" weight="20" height="20" alt=""/></strong></td>
                       <td><strong style={{cursor: 'pointer'}} onClick={e=>this.handleFinal(e)}><img src="images/end.png" weight="15" height="15" alt=""/></strong></td>
                       <td><FormSelect
