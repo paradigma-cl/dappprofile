@@ -29,6 +29,7 @@
     "react-qrcode-logo": "^2.7.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "react-timer-mixin": "^0.13.4",
     "reactstrap": "^9.0.1",
     "shards-react": "^1.0.3",
     "uuid": "^8.3.2",
