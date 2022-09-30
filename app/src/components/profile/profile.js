@@ -35,6 +35,9 @@ import * as jose from 'jose'
 //QR
 import { QRCode } from 'react-qrcode-logo';
 
+//SetTime
+import TimerMixin from 'react-timer-mixin'
+
 
 class Profile extends React.Component {
   constructor() {
@@ -42,6 +45,7 @@ class Profile extends React.Component {
 
     this.state = {
       jsonBlockstack4: [],
+      jsonBlockstackApps: [],
       avatar: '',
       stxAddress2X: '',
       btcAddress2X: '',
@@ -94,7 +98,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    Promise.all([this.readVcard(this.props.userProfile),
+    Promise.all([this.readApps(this.props.userProfile),
+                 this.readVcard(this.props.userProfile),
                  this.readConfiguration(this.props.userProfile),
                  this.readProfile(this.props.userProfile)])
        .then(() => {},() => {})
@@ -469,6 +474,46 @@ class Profile extends React.Component {
     });
   }
 
+  readApps = (userX) => {
+    return new Promise ((resolve1, reject1) =>{
+      if (userX === undefined || userX === null || userX === ''){reject1()}
+      var nameLookupURL = "https://stacks-node-api.mainnet.stacks.co/v1/names/" + userX;
+      axios.get(nameLookupURL)
+        .then(result => {
+          this.setState({stxAddress2X:result.data.address})
+          const zoneFileJson = parseZoneFile(result.data.zonefile)
+          const zonefile4 = zoneFileJson.uri[0].target
+          axios.get(zonefile4)
+             .then(result => {
+                const jsonBlockstack1 = result.data[0].decodedToken.payload.claim.apps
+                const jsonBlockstack2 = [];
+                for(var i in jsonBlockstack1) {
+                    jsonBlockstack2.push([i,jsonBlockstack1[i]]);
+                }
+                this.setState({jsonBlockstackApps:jsonBlockstack2})
+             })
+             .catch(error => {
+               console.log(error)
+               reject1()
+             });
+          })
+        .catch(error => {
+           console.log(error)
+           reject1()
+        });
+    });
+  }
+
+  redirecting = () =>{
+    TimerMixin.setTimeout( () => {
+      if (this.props.language === 'es'){
+        window.location.href = "https://welcome.xck.app";
+      }else{
+        window.location.href = "https://welcome.xck.app/english";
+      }
+    }, 4000)
+  }
+
   render() {
     const avatar2 = 'images/avatar.png'
     let urlImg = 'images/background_profile.png'
@@ -479,6 +524,8 @@ class Profile extends React.Component {
     const checkedModeVcardX = this.state.checkedModeVcard
     const qrCodex = this.state.qrCode
     const dialogOpenQRCodeX = this.state.dialogOpenQRCode
+
+    const appsX = this.state.jsonBlockstackApps
 
     const arrayId = this.props.userProfile
     const arrayId2 = arrayId.split('.')
@@ -678,6 +725,32 @@ class Profile extends React.Component {
                             </>
                           : null
                           }
+
+                          <ListGroup flush>
+                            <ListGroupItem className="p-4 text-center" style={{ backgroundColor: this.state.colorCard }}>
+                              <Row>
+                                <Table size="sm" className="text-center" responsive borderless style={{fontSize:13}}>
+                                  <thead>
+                                      <tr>
+                                        <td style={{fontSize:12, color: this.state.colorLabelStxSddress}}><FormattedMessage id="profile.apps" /></td>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {appsX.map((todo, i) => {
+                                        return (
+                                            <tr key={i} style={{ color:this.state.colorPhone, fontSize:17}}>
+                                                <td className="text-center">
+                                                     <a href={todo[0]} target="_blank" rel="noopener noreferrer">{todo[0]}</a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                  </tbody>
+                                </Table>
+                              </Row>
+                            </ListGroupItem>
+                          </ListGroup>
+
                           <ListGroup flush>
                             <ListGroupItem className="p-4" style={{ backgroundColor: this.state.colorCard }}>
                               <Row>
@@ -738,6 +811,10 @@ class Profile extends React.Component {
                                     <tr>
                                       <td style={{ width: "100%", fontSize:30, color: this.state.color404 }}><FormattedMessage id="profile.profilenotfound" /></td>
                                     </tr>
+                                    <tr></tr>
+                                    <tr>
+                                      <td style={{ width: "100%", fontSize:35, color: this.state.colorProfileName }}>Redirecting...</td>
+                                    </tr>
                                   </tbody>
                               </Table>
                             </Col>
@@ -777,6 +854,7 @@ class Profile extends React.Component {
                           </Row>
                           <Row>&nbsp;</Row>
                           <Row>&nbsp;</Row>
+                          {this.redirecting()}
                         </>
                       }
                       </>
@@ -795,6 +873,10 @@ class Profile extends React.Component {
                                   </tr>
                                   <tr>
                                     <td style={{ width: "100%", fontSize:30, color: this.state.color404 }}><FormattedMessage id="profile.domainnotfound" /></td>
+                                  </tr>
+                                  <tr></tr>
+                                  <tr>
+                                    <td style={{ width: "100%", fontSize:35, color: this.state.colorProfileName }}>Redirecting...</td>
                                   </tr>
                                 </tbody>
                             </Table>
@@ -835,6 +917,7 @@ class Profile extends React.Component {
                         </Row>
                         <Row>&nbsp;</Row>
                         <Row>&nbsp;</Row>
+                        {this.redirecting()}
                       </>
                     }
                   </Card>
