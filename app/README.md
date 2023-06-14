@@ -1,144 +1,247 @@
-# How to install the App profile service
+# Installation Guide and use of the application
 
-We will need:
+## AMBIENTE DESARROLLO
 
-     1. Linux Operating System (in this example we will use Ubuntu)
+1. CREAR BUILD
+   cd  /home/jfontirroig/pact/dappcrosscheck
+   sudo npm install
+   sudo npm run build
+   sudo chmod 777 -R /home/jfontirroig/pact/dappcrosscheck/build
+   copiar /home/jfontirroig/pact/dappcrosscheck/build/*.* a directorio /srv/crosscheck/build  en servidor de producción
 
-     2. An HTTPS:// certificate such as Let's Encrypt certificate (with Cerbot tool)
+## AMBIENTE PRODUCCION
 
-     3. An application server, we will detail our example with NGINX
+- SERVER LINUX CON DOMINIO CROSSCKECK.PARADIGMA.GLOBAL / XCK.APP
+  IP: 190.113.12.16
+  User: paradigma
+  Password: xaeKoo3f
 
-The first thing is to install the free Let’s Encrypt certificates with the Certbot tool for Linux
+- DEPRECADO APACHE2 ------------------------------------------------------------------------------------------
+  ver directorio /etc/apache2/sites-available/
 
-The steps to run the appilcation is the following:
+- NGINX ------------------------------------------------------------------------------------------
+  ver directorio /etc/nginx/sites-available/
 
-**1. We update the list of linux packages.**
 
-     sudo apt-get update
+- LET'S ENCRYPT ------------------------------------------------------------------------------------
+  ver link https://www.rosehosting.com/blog/how-to-install-lets-encrypt-on-ubuntu-20-04-with-apache/
+  ver link https://noviello.it/es/como-instalar-lets-encrypt-para-apache-en-ubuntu-20-04-lts/
+  ver link https://www.jesusamieiro.com/generar-un-certificado-ssl-wildcard-con-lets-encrypt/
+  ver link https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04-es
+  ver link https://www.digitalocean.com/community/questions/sudo-ufw-status-return-inactive
 
-**2. We add the certbot repository.**
 
-     sudo add-apt-repository ppa:certbot/certbot
+  sudo apt-get install software-properties-common.
+  sudo add-apt-repository universe.
+  sudo apt-get install certbot python3-certbot-apache.
+  sudo ufw status.
+  sudo ufw allow 'Apache Full'
+  sudo certbot --apache.
+  sudo certbot --apache certonly.
+  sudo certbot renew --dry-run.
 
-**3. We install the Certbot package**
 
-     sudo apt-get install certbot
+- Renovación
+  sudo systemctl stop nginx
+  sudo certbot renew --force-renew
 
-**4. We create the certificate for our domain, the NGINX server must not be running at the time of creating the certificate.**
 
-     sudo certbot –nginx
+SSLCertificateFile /etc/letsencrypt/live/xck.app/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/xck.app/privkey.pem
 
-We will use an example domain name anydomain.app
+- DEPLOY ------------------------------------------------------------------------------------------
+  sudo service apache2 stop
+  cd /srv/crosscheck/build
+  sudo rm -rf /var/www/html
+  cd /var/www/html
+  cd ..
+  sudo mkdir html
+  cd html
+  cd /srv/crosscheck/build
+  sudo cp -r * /var/www/html
+  cd /var/www/html
+  sudo nano .htaccess
 
-So, the Generated certificated will be available under /etc/letsencrypt/live/anydomain.app
+     Header set Access-Control-Allow-Origin "https://xck.app"
+     Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+     Header set Access-Control-Allow-Headers: "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,C$
+     Header set Access-Control-Allow-Credentials true
 
-In that directory we will have two files:
+     Options -MultiViews
+     RewriteEngine On
+     RewriteCond %{SERVER_PORT} 80
+     RewriteRule ^(.*)$ https://xck.app/$1 [R=301,L]
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteRule ^ index.html [QSA,L]
 
-      /etc/letsencrypt/live/anydomain.app/fullchain.pem
+  DEPRECADO ---> sudo service apache2 restart
+  sudo systemctl start nginx
 
-      /etc/letsencrypt/live/anydomain.app/privkey.pem
+  ---------------------------------------
 
-**5. Then we will install the virtual domains with NGINX**
+  Verify the deployment by navigating to your server address in your preferred browser.
+  ---------------------------------------
+  https://xck.app
+  https://crosscheck.paradigma.global
+  ---------------------------------------
 
-Installation Certificate for multiple domains, for example johnsmith.anydomain.app or mary_olsen.anydomain.app
+- TEST IOT DEVICE
+  cd /etc/letsencrypt/live/xck.app/
+  sudo json-server2 --watch /srv/crosscheck/datasensor.json --port 8443 --host xck.app --C fullchain.pem -K privkey.pem
 
-     sudo certbot certonly \
 
-      --manual \
 
-      --agree-tos \
 
-      --preferred-challenges=dns \
 
-      --server https://acme-v02.api.letsencrypt.org/directory \
+-  Multiples dominios para crosscheck y profile
 
-      --email contact.anycompany.org \
+  Instalación Certificado para profile
+  sudo certbot certonly \
+  --manual \
+  --agree-tos \
+  --preferred-challenges=dns \
+  --server https://acme-v02.api.letsencrypt.org/directory \
+  --email soporte.paradigma.global \
+  --domains *.xck.app
 
-      --domains *.anydomain.app
+  Generated certificated will be available under /etc/letsencrypt/live/xck.app
 
-The Generated certificated will be available under /etc/letsencrypt/live/anydomain-0001.app
+  /etc/letsencrypt/live/xck.app/fullchain.pem
+  /etc/letsencrypt/live/xck.app/privkey.pem
 
-     /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem
+  -----------------------------------------------------------------------------
 
-     /etc/letsencrypt/live/anydomain.app-0001/privkey.pem
+  Certificado para crosscheck
+  sudo certbot --nginx
 
-**6. An important step associated with virtual domains is the following:**
+  Generated certificated will be available under /etc/letsencrypt/live/xck.app-001
+  /etc/letsencrypt/live/xck.app-0001/fullchain.pem
+  /etc/letsencrypt/live/xck.app-0001/privkey.pem
 
-*(enter DNS usually with CPANEL)*
+  -----------------------------------------------------------------------------
+  Sitios
+  /var/www/crosscheck/html
+  /var/www/profile/html
 
-And add in the DNS (usually with CPANEL) a record for *.anydomain.app
+  -----------------------------------------------------------------------------
 
-For wildcard certificates, the only challenge method Let’s Encrypt accepts is the DNS challenge, which we can invoke via the preferred-challenges=dns flag.
+  Archivo configuración crosscheck
+  /etc/nginx/sites-enabled
+  sudo nano crosscheck.conf
 
-After executing the above command, the Certbot will share a text record to add to your DNS.
+  ##
+  # Crosscheck server configuration
+  ##
 
-Please deploy a DNS TXT record under the name
+  server {
 
-_acme-challenge.erpnext.xyz with the following value for example:
+          listen [::]:443 ssl ipv6only=on; # managed by Certbot
+          listen 443 ssl; # managed by Certbot
 
-J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+          ssl_certificate /etc/letsencrypt/live/xck.app-0001/fullchain.pem; # managed by Certbot
+          ssl_certificate_key /etc/letsencrypt/live/xck.app-0001/privkey.pem; # managed by Certbot
+          include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+          ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-Record Name: _acme-challenge
+          if ($host = www.xck.app) {
+              return 301 https://xck.app$request_uri;
+          } # managed by Certbot
 
-Record Value: J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+          server_name xck.app;
 
-Create TXT record via DNS console and setup key and value
+        	root /var/www/crosscheck/html;
 
-**7. Modify site settings**
-      
-      cd /etc/nginx/sites-enabled
-      
-      sudo nano profile.conf
+        	index index.html index.htm index.nginx-debian.html;
 
-        ##
-        # Profile server configuration
-        ##
+        	location / {
+        	    try_files $uri $uri/ =404;
+              add_header 'Access-Control-Allow-Origin' '*' always;
+          }
+  }
 
-        server {
-                listen 443 ssl; # managed by Certbot
-                ssl_certificate /etc/letsencrypt/live/anydomain.app-0001/fullchain.pem; # managed by Certbot
-                ssl_certificate_key /etc/letsencrypt/live/anydomain.app-0001/privkey.pem; # managed by Certbot
-                include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-                ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+  server {
 
-                server_name *.anydomain.app;
+          listen 443 ssl; # managed by Certbot
+          ssl_certificate /etc/letsencrypt/live/xck.app/fullchain.pem; # managed by Certbot
+          ssl_certificate_key /etc/letsencrypt/live/xck.app/privkey.pem; # managed by Certbot
+          include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+          ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-                root /var/www/profile/html;
+          server_name *.xck.app;
 
-                index index.html index.htm index.nginx-debian.html;
+          root /var/www/profile/html;
 
-                location / {
-                    try_files $uri $uri/ =404;
-                }
-        }
+          index index.html index.htm index.nginx-debian.html;
 
-        server {
-            if ($host = anydomain.app) {
-                return 301 https://$host$request_uri;
-            } # managed by Certbot
+          location / {
+              try_files $uri $uri/ =404;
+              add_header 'Access-Control-Allow-Origin' '*' always;
+          }
+  }
 
-**8. Instalar y compilar el app profile**
+  server {
 
-   To setup the development environment for this repository, follow these steps:
+  	listen 80 default_server;
+  	listen [::]:80 default_server;
 
-      1. Clone this package.
+          if ($host = www.xck.app) {
+              return 301 https://xck.app$request_uri;
+          } # managed by Certbot
 
-      2. Run npm install to install dependencies
+          server_name xck.app;
 
-      3. Run npm run build to build packages
+          root /var/www/profile/html;
 
-**9. Create site in folder /var/www/profile/html**
+          index index.html index.htm index.nginx-debian.html;
 
-      /var/www/profile/html
+          location / {
+              try_files $uri /index.html?$args;
+          }
 
-      Install in this directory the contents of the build folder that was generated when compiling the application
+          location ~ \.htm$ {
+              try_files $uri =404;
+          }
+  }
 
-**10. Start NGINX**
+  server {
 
-      sudo systemctl start nginx
+          listen 80;
+          listen [::]:80;
 
+          server_name *.xck.app;
 
-[Link Demo Profile](https://support.xck.app)
+          root /var/www/profile/html;
 
-[Link Demo Display JSON](https://support.xck.app?profile)
+          index index.html index.htm index.nginx-debian.html;
 
+          location / {
+              try_files $uri $uri/ =404;
+              add_header 'Access-Control-Allow-Origin' '*' always;
+          }
+  }
+
+
+  ----------------------------------------------------------------------------------
+  DNS
+  For wildcard certificates, the only challenge method Let’s Encrypt accepts is the DNS challenge, which we can invoke via the preferred-challenges=dns flag.
+  After executing the above command, the Certbot will share a text record to add to your DNS.
+  Please deploy a DNS TXT record under the name
+  _acme-challenge.erpnext.xyz with the following value for example:
+  J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+  Record Name: _acme-challenge
+  Record Value: J50GNXkhGmKCfn-0LQJcknVGtPEAQ_U_WajcLXgqWqo
+  Create TXT record via DNS console and setup key and value
+
+  Y agregar en el DNS un registro para *.xck.app
+
+- Renovación
+  sudo systemctl stop nginx
+  sudo certbot renew --force-renew
+
+- Verificar Servidores
+curl -I https://xck.app
+curl -I https://support.xck.app
+
+
+License
+MIT

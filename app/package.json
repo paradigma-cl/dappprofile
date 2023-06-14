@@ -19,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "prop-types": "^15.7.2",
+    "punycode": "^2.3.0",
     "react": "^17.0.2",
     "react-app-rewired": "^2.2.1",
     "react-dom": "^17.0.2",
@@ -32,6 +33,7 @@
     "react-timer-mixin": "^0.13.4",
     "reactstrap": "^9.0.1",
     "shards-react": "^1.0.3",
+    "tr46": "^4.1.1",
     "uuid": "^8.3.2",
     "vcards-js": "^2.10.0",
     "zone-file": "^1.0.0"
