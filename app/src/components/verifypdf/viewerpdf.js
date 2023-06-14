@@ -70,8 +70,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + userOrigin;
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
                .then(result => {
                   const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -139,8 +147,16 @@ class ViewerPdf extends Component {
           var nameLookupURL = networkUrlX + "/v1/names/" + todoUserRemote.id;
           axios.get(nameLookupURL)
             .then(result => {
-              const zoneFileJson = parseZoneFile(result.data.zonefile)
-              const zonefile4 = zoneFileJson.uri[0].target
+              //const zoneFileJson = parseZoneFile(result.data.zonefile)
+              //const zonefile4 = zoneFileJson.uri[0].target
+
+              const {zonefile} = result.data
+              this.setState({stxAddress2X:result.data.address})
+              const zonefile1 = zonefile.indexOf('"');
+              const zonefile2 = zonefile.lastIndexOf('"');
+              const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+              const zonefile4 = zonefile3.replace(/\\/g,'')
+
               axios.get(zonefile4)
                  .then(result => {
                     const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -211,8 +227,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + userX;
         axios.get(nameLookupURL)
             .then(result => {
-              const zoneFileJson = parseZoneFile(result.data.zonefile)
-              const zonefile4 = zoneFileJson.uri[0].target
+              //const zoneFileJson = parseZoneFile(result.data.zonefile)
+              //const zonefile4 = zoneFileJson.uri[0].target
+
+              const {zonefile} = result.data
+              this.setState({stxAddress2X:result.data.address})
+              const zonefile1 = zonefile.indexOf('"');
+              const zonefile2 = zonefile.lastIndexOf('"');
+              const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+              const zonefile4 = zonefile3.replace(/\\/g,'')
+
               axios.get(zonefile4)
                  .then(result => {
                     const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -283,8 +307,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
                 .then(result => {
                   const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -353,8 +385,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
               .then(result => {
                   const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -413,8 +453,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
               .then(result => {
                   const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -473,8 +521,16 @@ class ViewerPdf extends Component {
         var nameLookupURL = networkUrlX + "/v1/names/" + this.props.userOrigin;
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
                .then(result => {
                   const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -540,8 +596,16 @@ class ViewerPdf extends Component {
         let jsonBlockstack4 = []
         axios.get(nameLookupURL)
           .then(result => {
-            const zoneFileJson = parseZoneFile(result.data.zonefile)
-            const zonefile4 = zoneFileJson.uri[0].target
+            //const zoneFileJson = parseZoneFile(result.data.zonefile)
+            //const zonefile4 = zoneFileJson.uri[0].target
+
+            const {zonefile} = result.data
+            this.setState({stxAddress2X:result.data.address})
+            const zonefile1 = zonefile.indexOf('"');
+            const zonefile2 = zonefile.lastIndexOf('"');
+            const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+            const zonefile4 = zonefile3.replace(/\\/g,'')
+
             axios.get(zonefile4)
               .then(result => {
                 const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
