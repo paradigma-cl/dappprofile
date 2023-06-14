@@ -56,7 +56,7 @@ The description for a App Profile document is done using a JSON web token based 
 
 Additionally, this App Profile document has to include the did-method-web.  The example is represented as 'did:web:xck.app'.  The target system of the Web DID method is the web host that the domain name described by the DID resolves to when queried through the Domain Name System (DNS). This did-method-web is included in this app profile.
 
-It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app?profile
+It could be useful to have a way to retrieve a verifiable DID profile for the Aspp as recommended by the W3C using an URI. For example, a web URI https://xck.app/.well-known/profile
 
 In this case, the application should also return a JSON web token using the protocol previously mentioned.
 
@@ -70,7 +70,8 @@ In this case, the application should also return a JSON web token using the prot
 
 For example, for the domain name 'xck.app', the 'did.json' will be available under the following URL: 
 'did:web:xck.app'
- -> https://xck.app?did.json
+ -> https://xck.app/.well-known/did.json
+ -> https://my.xck.app/xck.app/.well-known/did.json
 
 [Example of the 'did.json' file for 'XCK.app'](/appprofile/did.json)
 
@@ -82,7 +83,8 @@ In this context, the DIDs are URIs that associate a DID subject as an user of th
 #### b.1 The App User's Profile document
 The Stacks Blockchain Name System has the possibility to create subdomain names under a defined decentralized domain name.  A user can claim a subdomain name, having the attribute of a DID.  Using the same example, for the user 'support', the subdomain name is 'support.xck.app'
 
-In the example used here, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI https://support.xck.app?profile
+In the example used here, the user is identified by this subdomain name, and it could be useful to retrieve a verifiable DID profile for the App User as recommended by the W3C using an URI.  For example, a web URI -> -> -> https://support.xck.app/.well-known/profile
+-> https://my.xck.app/support.xck.app/.well-known/profile
 
 The description for a App User Profile document is done using a JSON web token based on the Person Schema object (https://schema.org/Person).
 
@@ -100,7 +102,8 @@ In this case, the application should also return a JSON web token using the Pers
 
 For example, for the domain name 'support.xck.app', the 'did.json' will be available under the following URL: 
 'did:web:support.xck.app'
- -> https://support.xck.app?did.json
+ -> https://support.xck.app/.well-known/did.json
+ -> https://my.xck.app/support.xck.app/.well-known/did.json
 
 [Example of the 'did.json' file for 'support.XCK.app'](/userprofile/did.json)
 
