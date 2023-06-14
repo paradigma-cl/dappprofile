@@ -111,4 +111,8 @@ The steps to run the appilcation is the following:
 
 [Link Demo Profile](https://support.xck.app)
 
-[Link Demo Display JSON](https://support.xck.app?profile)
+[Link Demo Display JSON](https://support.xck.app/.well-known/profile)
+
+[Link Demo Profile](https://my.xck.app/support.xck.app)
+
+[Link Demo Display JSON](https://my.xck.app/support.xck.app/.well-known/profile)
