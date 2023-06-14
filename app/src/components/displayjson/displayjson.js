@@ -26,6 +26,7 @@ class DisplayJson extends React.Component {
 
     this.state = {
       jsonBlockstack5: null,
+      jsonBlockstack6: null,
     };
   }
 
@@ -40,11 +41,20 @@ class DisplayJson extends React.Component {
       var nameLookupURL = "https://stacks-node-api.mainnet.stacks.co/v1/names/" + userX;
       axios.get(nameLookupURL)
         .then(result => {
-          const zoneFileJson = parseZoneFile(result.data.zonefile)
-          const zonefile4 = zoneFileJson.uri[0].target
+          //const zoneFileJson = parseZoneFile(result.data.zonefile)
+          //const zonefile4 = zoneFileJson.uri[0].target
+
+          const {zonefile} = result.data
+          this.setState({stxAddress2X:result.data.address})
+          const zonefile1 = zonefile.indexOf('"');
+          const zonefile2 = zonefile.lastIndexOf('"');
+          const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+          const zonefile4 = zonefile3.replace(/\\/g,'')
+
           axios.get(zonefile4)
              .then(result => {
                 const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
+                this.setState({jsonBlockstack6: JSON.stringify(result.data[0].decodedToken)})
                 let jsonBlockstack2 = jsonBlockstack1
                 let jsonBlockstack4 = {}
                 if (window.location.origin === 'http://localhost:3000'){
@@ -89,9 +99,9 @@ class DisplayJson extends React.Component {
   }
 
   render() {
-    let jsonBlockstack5X = false
-    if (this.state.jsonBlockstack5 !== null){
-      jsonBlockstack5X = true
+    let jsonBlockstack6X = false
+    if (this.state.jsonBlockstack6 !== null){
+      jsonBlockstack6X = true
     }
 
     const jsonStyle = {
@@ -102,7 +112,7 @@ class DisplayJson extends React.Component {
 
     return (
       <Container fluid className="main-content-container px-4" >
-        {jsonBlockstack5X ?
+        {jsonBlockstack6X ?
           <>
             <Row>&nbsp;</Row>
             <Row>
@@ -114,7 +124,7 @@ class DisplayJson extends React.Component {
                     <Col lg="1"></Col>
                     <Col lg="10">
                        <div>
-                         <JsonFormatter json={this.state.jsonBlockstack5} tabWith={4} jsonStyle={jsonStyle} />
+                         <JsonFormatter json={this.state.jsonBlockstack6} tabWith={4} jsonStyle={jsonStyle} />
                        </div>
                     </Col>
                    <Col lg="1"></Col>

@@ -16,6 +16,8 @@ import Loader from '../loader'
 //JSON Formatter
 import JsonFormatter from 'react-json-formatter'
 
+const punycode = require('punycode/');
+
 class DisplayDidW3c extends React.Component {
   constructor() {
     super();
@@ -36,8 +38,16 @@ class DisplayDidW3c extends React.Component {
       var nameLookupURL = "https://stacks-node-api.mainnet.stacks.co/v1/names/" + userX;
       axios.get(nameLookupURL)
         .then(result => {
-          const zoneFileJson = parseZoneFile(result.data.zonefile)
-          const zonefile4 = zoneFileJson.uri[0].target
+          //const zoneFileJson = parseZoneFile(result.data.zonefile)
+          //const zonefile4 = zoneFileJson.uri[0].target
+
+          const {zonefile} = result.data
+          this.setState({stxAddress2X:result.data.address})
+          const zonefile1 = zonefile.indexOf('"');
+          const zonefile2 = zonefile.lastIndexOf('"');
+          const zonefile3 = zonefile.substring(zonefile1+1,zonefile2)
+          const zonefile4 = zonefile3.replace(/\\/g,'')
+
           axios.get(zonefile4)
              .then(result => {
                 const jsonBlockstack1 = JSON.stringify(result.data[0].decodedToken.payload.claim.appsMeta)
@@ -82,7 +92,34 @@ class DisplayDidW3c extends React.Component {
   }
 
   render() {
-    let jsonBlockstack5X = false
+
+    const userProfileX = punycode.toUnicode(this.props.userProfile)
+
+    let userProfile9X = ''
+    if (this.props.userProfile.includes('xck.app') === true){
+      userProfile9X = `${userProfileX}`
+    }else {
+      userProfile9X = `my.xck.app:${userProfileX}`
+    }
+
+    let jwtDidW3c = ''
+    jwtDidW3c = jwtDidW3c + `{`
+    jwtDidW3c = jwtDidW3c + `  "@context": "https://www.w3.org/ns/did/v1",`
+    jwtDidW3c = jwtDidW3c + `  "did:web": "${userProfile9X}",`
+    jwtDidW3c = jwtDidW3c + `  "verificationMethod": [{`
+    jwtDidW3c = jwtDidW3c + `     "id": "did:web:${userProfile9X}#controller",`
+    jwtDidW3c = jwtDidW3c + `     "type": "Secp256k1",`
+    jwtDidW3c = jwtDidW3c + `     "controller": "did:web:${userProfile9X}",`
+    jwtDidW3c = jwtDidW3c + `     "stacksAddress": "${this.state.stxAddress2X}"`
+    jwtDidW3c = jwtDidW3c + `  }],`
+    jwtDidW3c = jwtDidW3c + `  "authentication": [`
+    jwtDidW3c = jwtDidW3c + `     "did:web:${userProfile9X}#controller"`
+    jwtDidW3c = jwtDidW3c + `  ]`
+    jwtDidW3c = jwtDidW3c + `}`
+
+
+    let jsonBlockstack5X = true
+    //let jsonBlockstack5X = false
     if (this.state.jsonBlockstack5 !== null){
       jsonBlockstack5X = true
     }
@@ -91,7 +128,7 @@ class DisplayDidW3c extends React.Component {
         propertyStyle: { color: 'red' },
         stringStyle: { color: 'green' },
         numberStyle: { color: 'darkorange' }
-      }
+    }
 
     return (
       <Container fluid className="main-content-container px-4" >
@@ -107,7 +144,7 @@ class DisplayDidW3c extends React.Component {
                     <Col lg="1"></Col>
                     <Col lg="10">
                        <div>
-                         <JsonFormatter json={this.state.jsonBlockstack5} tabWith={4} jsonStyle={jsonStyle} />
+                         <JsonFormatter json={jwtDidW3c} tabWith={4} jsonStyle={jsonStyle} />
                        </div>
                     </Col>
                    <Col lg="1"></Col>
