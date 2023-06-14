@@ -54,29 +54,64 @@ class App extends PureComponent {
       language3 ='en'
     }
 
-    const userProfileX = window.location.origin;
-    const ArrayIdValue = userProfileX.split('https://')
-    let userProfile = ArrayIdValue[1]
+    console.log('xxxxxxxxx')
 
+    let userProfile = ''
+    let ArrayIdValue = ''
+    let domainProfileX = window.location;
+    let domainProfileX2 = window.location.href
+    let domainProfileX3 = window.location.pathname;
+
+    console.log(domainProfileX)
+    console.log(domainProfileX2)
+    console.log(domainProfileX3)
+    console.log(domainProfileX2.substring(0,19))
+
+    let bDisplayMy = true
     let bDisplayProfile = false
     let bDisplayDidW3c = false
     let bVerifyPdf = false
     let codeVerifyPdf = ''
-    if (window.location.search === '?profile'){
+    let searchX = ''
+
+    if (domainProfileX2.substring(0,19) === 'https://my.xck.app/'){
+       console.log('yyyyyyyyy')
+       ArrayIdValue = domainProfileX2.split('https://my.xck.app/')
+       userProfile = ArrayIdValue[1]
+       searchX = domainProfileX3
+    }else{
+       console.log('zzzzzzzzz')
+       let userProfileX = window.location.origin;
+       ArrayIdValue = userProfileX.split('https://')
+       userProfile = ArrayIdValue[1]
+       searchX = domainProfileX3
+    }
+
+    if (searchX.includes('/.well-known/profile') === true){
       bDisplayProfile = true
     }
-    if (window.location.search === '?did.json'){
+    if (searchX.includes('/.well-known/did.json') === true){
       bDisplayProfile = true
       bDisplayDidW3c = true
     }
 
-    const pdfX = window.location.search
-    let pdfX2 = pdfX.substring(0,5)
-    if (pdfX2 === '?pdf:'){
-      codeVerifyPdf =  pdfX.substring(5)
+    if (searchX.includes('?pdf:') === true){
+      ArrayIdValue = searchX.split('?pdf:')
+      codeVerifyPdf = ArrayIdValue[1]
       bDisplayProfile = true
       bVerifyPdf = true
+      ArrayIdValue = userProfile.split('?')
+      userProfile = ArrayIdValue[0]
+    }else{
+      ArrayIdValue = userProfile.split('/.well-known')
+      userProfile = ArrayIdValue[0]
     }
+
+    console.log(userProfile)
+    console.log(searchX)
+    console.log(bDisplayProfile)
+    console.log(bDisplayDidW3c)
+    console.log(bVerifyPdf)
 
     return (
       <IntlProvider locale={language3} messages={this.state.messages[language3]}>
